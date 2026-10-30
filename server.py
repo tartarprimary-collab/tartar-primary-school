@@ -27,11 +27,13 @@ LOCK = threading.Lock()
 SESSIONS, FAILS = {}, {}
 OTP_LOCK = threading.Lock()
 OTP_CHALLENGES, OTP_LAST_SENT = {}, {}
-FILES = {"/": ("portal/pages/index.html", "text/html; charset=utf-8"),
-         "/index.html": ("portal/pages/index.html", "text/html; charset=utf-8"),
-         "/manage.html": ("portal/pages/manage.html", "text/html; charset=utf-8"),
-         "/student.html": ("portal/pages/student.html", "text/html; charset=utf-8"),
-         "/crest.png": ("portal/assets/img/crest.png", "image/png")}
+FILES = {
+    "/": ("index.html", "text/html; charset=utf-8"),
+    "/index.html": ("index.html", "text/html; charset=utf-8"),
+    "/manage.html": ("manage.html", "text/html; charset=utf-8"),
+    "/student.html": ("student.html", "text/html; charset=utf-8"),
+    "/crest.png": ("crest.png", "image/png"),
+}
 DATA = os.path.join(BASE, "data.json")
 ID_RE = re.compile(r"^[\w|-]{1,60}$")
 SCHEMA = {  # fields kept for each school-management collection
