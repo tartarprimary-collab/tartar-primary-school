@@ -449,7 +449,6 @@ def do_GET(self):
             return self.reply(200, {"google_client_id": GOOGLE_CLIENT_ID})
 
         self.reply(404, {"error": "Not found"})
-
     def do_POST(self):
         path, ip = urllib.parse.urlparse(self.path).path, self.client_address[0]
         try:
