@@ -1432,21 +1432,19 @@ class HTTPSRedirectHandler(BaseHTTPRequestHandler):
     def log_message(self, *args):
         pass
 
-
 if __name__ == "__main__":
     if len(ADMIN_PASSWORD) < 16 or not ADMIN_PASSWORD.strip():
         raise SystemExit("Set ADMIN_PASSWORD to a unique password of at least 16 characters before starting the server.")
-    if not 1 <= HTTP_PORT <= 65535 or not 1 <= HTTPS_PORT <= 65535 or HTTP_PORT == HTTPS_PORT:
-        raise SystemExit("HTTP_PORT and HTTPS_PORT must be different valid TCP ports.")
+    
+    port = int(os.environ.get("PORT", 8000))
+    server_address = ('0.0.0.0', port)
+    
     try:
-        certificate, private_key, local_certificate = ensure_tls_certificate()
-        tls_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-        tls_context.minimum_version = ssl.TLSVersion.TLSv1_2
-        tls_context.load_cert_chain(certificate, private_key)
-        https_server = ThreadingHTTPServer(("0.0.0.0", HTTPS_PORT), Handler)
-        https_server.socket = tls_context.wrap_socket(https_server.socket, server_side=True)
-    except (OSError, RuntimeError, ssl.SSLError) as exc:
-        logging.error("HTTPS startup failed: %s", exc)
+        httpd = ThreadingHTTPServer(server_address, Handler)
+        print(f"Tartar School portal running on port {port}.")
+        httpd.serve_forever()
+    except Exception as exc:
+        logging.error("Server startup failed: %s", exc)
         raise SystemExit(1) from exc
 
     try:
