@@ -400,8 +400,10 @@ class Handler(BaseHTTPRequestHandler):
         if not s: return None, None
         return s, db
 
-    def do_GET(self):
+def do_GET(self):
         path = urllib.parse.urlparse(self.path).path
+        
+        # Check standard defined files dictionary
         if path in FILES:
             name, ctype = FILES[path]
             try:
@@ -410,12 +412,21 @@ class Handler(BaseHTTPRequestHandler):
             except OSError:
                 return self.reply(404, {"error": "File missing: " + name})
 
-        # Serve static application files directly from the root directory
+        # Handle legacy /school/ paths by stripping prefix and mapping to root files
+        if path in ("/school", "/school/"):
+            self.send_response(302)
+            self.send_header("Location", "/dashboard.html")
+            self.end_headers()
+            return
+
         if path.startswith("/school/"):
-            rel = os.path.normpath(urllib.parse.unquote(path[8:])).lstrip("/\\")
-            target = os.path.realpath(os.path.join(BASE, rel))
-            if (not target.startswith(os.path.realpath(BASE) + os.sep) or os.path.splitext(target)[1].lower() not in STATIC_EXT or not os.path.isfile(target)):
-                return self.reply(404, {"error": "Not found"})
+            path = path[7:] # strip /school prefix
+
+        # Serve any static html/js/css/png directly from the root BASE directory
+        target = os.path.realpath(os.path.join(BASE, path.lstrip("/")))
+        if (target.startswith(os.path.realpath(BASE) + os.sep) and 
+            os.path.splitext(target)[1].lower() in STATIC_EXT and 
+            os.path.isfile(target)):
             with open(target, "rb") as f:
                 return self.reply(200, raw=f.read(), ctype=mimetypes.guess_type(target)[0] or "application/octet-stream")
 
