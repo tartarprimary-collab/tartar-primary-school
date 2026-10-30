@@ -19,7 +19,12 @@ HTTPS_PORT       = int(os.environ.get("HTTPS_PORT", "8443"))
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 BASE = os.path.dirname(os.path.abspath(__file__))
-DB = os.path.join(BASE, "codes.json")
+# Where records live. On Render set DATA_DIR to the persistent disk mount path (e.g. /var/data).
+DATA_DIR = os.path.abspath(os.environ.get("DATA_DIR", BASE))
+os.makedirs(DATA_DIR, exist_ok=True)
+# Set automatically by Render: the server then runs plain HTTP behind Render's HTTPS proxy.
+BEHIND_PROXY = bool(os.environ.get("PORT"))
+DB = os.path.join(DATA_DIR, "codes.json")
 LOCK = threading.Lock()
 SESSIONS, FAILS = {}, {}
 OTP_LOCK = threading.Lock()
@@ -29,7 +34,7 @@ FILES = {"/": ("portal/pages/index.html", "text/html; charset=utf-8"),
          "/manage.html": ("portal/pages/manage.html", "text/html; charset=utf-8"),
          "/student.html": ("portal/pages/student.html", "text/html; charset=utf-8"),
          "/crest.png": ("portal/assets/img/crest.png", "image/png")}
-DATA = os.path.join(BASE, "data.json")
+DATA = os.path.join(DATA_DIR, "data.json")
 ID_RE = re.compile(r"^[\w|-]{1,60}$")
 SCHEMA = {  # fields kept for each school-management collection
     "students":   ["name", "first", "middle", "surname", "adm", "class", "fee_total",
@@ -41,10 +46,10 @@ SCHEMA = {  # fields kept for each school-management collection
     "results":    ["student", "term", "subject", "score"],
     "resources":  ["title", "subject", "class", "filename"],   # files live in /uploads
 }
-UPLOADS = os.path.join(BASE, "uploads")
+UPLOADS = os.path.join(DATA_DIR, "uploads")
 EXT = {"pdf", "doc", "docx", "ppt", "pptx", "xls", "xlsx", "txt", "png", "jpg", "jpeg"}
 MAX_FILE = 8 * 1024 * 1024
-USERS = os.path.join(BASE, "users.json")           # staff accounts (passwords stored hashed)
+USERS = os.path.join(DATA_DIR, "users.json")           # staff accounts (passwords stored hashed)
 STAFF_SESS = {}   # staff session token -> (username, expiry)
 TEACHER_LIKE = ("teacher", "senior", "deputy")   # senior teacher / deputy head of institution share the teacher permissions
 ROLES = ("principal", "bursar") + TEACHER_LIKE
@@ -54,10 +59,10 @@ for _r in TEACHER_LIKE:
     ROLE_WRITE[_r] = {"scores", "attendance", "outbox"}
 USERNAME_RE = re.compile(r"^[a-z0-9._-]{3,30}$")
 STU = {}      # student session token -> (student id, expiry)
-STATE = os.path.join(BASE, "state.json")           # the school system's records
-ADMISSIONS = os.path.join(BASE, "admissions.json")
-CLUB_REQUESTS = os.path.join(BASE, "club-requests.json")
-BACKUPS = os.path.join(BASE, "backups")
+STATE = os.path.join(DATA_DIR, "state.json")           # the school system's records
+ADMISSIONS = os.path.join(DATA_DIR, "admissions.json")
+CLUB_REQUESTS = os.path.join(DATA_DIR, "club-requests.json")
+BACKUPS = os.path.join(DATA_DIR, "backups")
 SCHOOL_DIR = os.path.join(BASE, "school")           # the Tartar School app (static files)
 STATIC_EXT = {".html", ".js", ".css", ".png", ".svg", ".ico"}
 ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
@@ -703,7 +708,10 @@ class Handler(BaseHTTPRequestHandler):
         self.reply(404, {"error": "Not found"})
 
     def do_POST(self):
-        path, ip = urllib.parse.urlparse(self.path).path, self.client_address[0]
+        path = urllib.parse.urlparse(self.path).path
+        ip = self.client_address[0]
+        if BEHIND_PROXY:   # behind Render every connection comes from its proxy; use the forwarded client IP
+            ip = self.headers.get("X-Forwarded-For", "").split(",")[0].strip() or ip
         try:
             n = min(int(self.headers.get("Content-Length") or 0), 12000000 if path in ("/api/admin/upload", "/api/state") else 10000)
             data = json.loads(self.rfile.read(n) or b"{}")
@@ -1433,6 +1441,23 @@ class HTTPSRedirectHandler(BaseHTTPRequestHandler):
 if __name__ == "__main__":
     if len(ADMIN_PASSWORD) < 16 or not ADMIN_PASSWORD.strip():
         raise SystemExit("Set ADMIN_PASSWORD to a unique password of at least 16 characters before starting the server.")
+    if BEHIND_PROXY:
+        try:
+            proxy_port = int(os.environ["PORT"])
+            if not 1 <= proxy_port <= 65535:
+                raise ValueError
+        except ValueError:
+            raise SystemExit("PORT must be a valid TCP port number.")
+        server = ThreadingHTTPServer(("0.0.0.0", proxy_port), Handler)
+        print(f"Tartar School portal running behind an HTTPS proxy on port {proxy_port}.")
+        print(f"  Data folder: {DATA_DIR}")
+        try:
+            server.serve_forever()
+        except KeyboardInterrupt:
+            print("\nStopping Tartar School server.")
+        finally:
+            server.server_close()
+        raise SystemExit(0)
     if not 1 <= HTTP_PORT <= 65535 or not 1 <= HTTPS_PORT <= 65535 or HTTP_PORT == HTTPS_PORT:
         raise SystemExit("HTTP_PORT and HTTPS_PORT must be different valid TCP ports.")
     try:
