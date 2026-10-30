@@ -13,9 +13,12 @@ AT_USERNAME     = os.environ.get("AT_USERNAME", "").strip()
 AT_API_KEY      = os.environ.get("AT_API_KEY", "").strip()
 AT_SENDER       = os.environ.get("AT_SENDER", "").strip()
 ADMIN_PHONE     = os.environ.get("ADMIN_PHONE", "").strip()
-HTTP_PORT        = int(os.environ.get("HTTP_PORT", "8000"))
-HTTPS_PORT       = int(os.environ.get("HTTPS_PORT", "8443"))
-# =========================================================
+import os
+from http.server import HTTPServer
+
+port = int(os.environ.get("PORT", 8000))
+server_address = ('0.0.0.0', port)
+# Start normal HTTP server without SSL wrapping or HTTPS redirects on Render
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 BASE = os.path.dirname(os.path.abspath(__file__))
