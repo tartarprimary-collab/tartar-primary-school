@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Parent portal — Tartar School</title>
+<link rel="icon" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+<div id="shell" class="shell">
+  <div class="shell-content">
+    <main id="main" class="main">
+
+      <div class="page-header">
+        <div>
+          <div class="eyebrow">Parent portal</div>
+          <h1 id="hdrName">&nbsp;</h1>
+          <p class="desc" id="hdrDesc">This is the view Tartar School gives families on the same product.</p>
+        </div>
+        <div class="actions"><div class="select-wrap"><select id="childSelect"></select></div></div>
+      </div>
+
+      <div class="kpi-grid cols-4" id="kpiGrid"></div>
+
+      <div class="grid-cols-2 mt-4">
+        <div class="card card-pad">
+          <div class="card-title" id="asmTitle">Term 3 CAT 1</div>
+          <p class="small muted mt-1">Achievement levels follow KICD's four-band rubric &mdash; no class rank is shown.</p>
+          <div id="subjectList" class="mt-3"></div>
+        </div>
+        <div class="card card-pad">
+          <div class="card-title">From the school</div>
+          <div id="messageList" class="mt-3 stack"></div>
+        </div>
+      </div>
+
+      <div class="card card-pad mt-4">
+        <div class="row-between" style="flex-wrap:wrap;gap:10px;">
+          <div>
+            <div class="card-title">Full progress report</div>
+            <p class="small muted mt-1">Download, share, or print the detailed learner report.</p>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button type="button" class="btn btn-outline btn-sm" id="btnPrint"></button>
+            <button type="button" class="btn btn-outline btn-sm" id="btnShare"></button>
+            <button type="button" class="btn btn-primary btn-sm" id="btnDownload"></button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<div id="toast-root" class="toast-root"></div>
+<div id="overlay-root"></div>
+
+<script src="../assets/js/data.js"></script>
+<script src="../assets/js/pdfkit-mini.js"></script>
+<script src="../assets/js/reports.js"></script>
+<script src="../assets/js/shell.js"></script>
+<script>Shell.init('parent');</script>
+<script src="../assets/js/parent.js"></script>
+</body>
+</html>

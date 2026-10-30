@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Messages — Tartar School</title>
+<link rel="icon" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+<div id="shell" class="shell">
+  <div class="shell-content">
+    <main id="main" class="main">
+
+      <div class="page-header">
+        <div>
+          <div class="eyebrow">Bulk SMS</div>
+          <h1>Messages</h1>
+          <p class="desc">Write once. Send to boarding balances, a grade, or today's absentees. 160 characters per SMS.</p>
+        </div>
+      </div>
+
+      <div class="grid-cols-2">
+        <div class="card card-pad">
+          <div class="label">Audience</div>
+          <div class="chip-row mt-2" id="audienceChips"></div>
+
+          <div class="field mt-4"><label>Message</label><textarea id="msgBody" rows="5"></textarea></div>
+          <p class="small muted mt-1" id="charCount"></p>
+          <button type="button" class="btn btn-primary mt-2" id="btnSend">Send SMS</button>
+        </div>
+        <div class="card card-pad">
+          <div class="label">Will receive</div>
+          <div class="stack mt-2" id="recipientList" style="max-height:360px;overflow-y:auto;"></div>
+        </div>
+      </div>
+
+      <div class="card card-pad mt-4">
+        <div class="card-title">Outbox</div>
+        <div class="stack mt-3" id="outboxList"></div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<div id="toast-root" class="toast-root"></div>
+<div id="overlay-root"></div>
+
+<script src="../assets/js/data.js"></script>
+<script src="../assets/js/shell.js"></script>
+<script>Shell.init('messages');</script>
+<script src="../assets/js/messages.js"></script>
+</body>
+</html>

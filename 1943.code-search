@@ -1,0 +1,21 @@
+# Query: 1943
+# ContextLines: 1
+
+4 results - 1 file
+
+C:\Users\tartar primary\AppData\Local\Temp\ee1be97e-6a12-46de-9d54-82304df488af_tartar-school-system (5).zip.8af\tartar-school-system\index.html:
+   74  <div class="hero" id="admissions"><div class="hl"><h2>ADMISSIONS</h2><p>APPLY TODAY!</p></div><div class="hr"><img src="crest.png" alt="Tartar School crest"></div>
+   75: <div class="cta"><button data-login>CLICK HERE</button><span>Est. 1943</span></div></div>
+   76  <section id="news"><h3 class="sh">NEWS | <a href="#">All News &amp; Announcements</a></h3><div class="grid">
+
+   80  <a class="ncard" href="#"><i class="c4"></i><div><h4>Admissions now open</h4><p>Applications open for the new intake.</p></div></a></div></section>
+   81: <div class="stats"><div class="grid"><div><b>1943</b>Year established</div><div><b>4</b>Core pillars</div><div><b>100%</b>Commitment to learning</div><div><b>1</b>School family</div></div></div>
+   82  <section id="programmes"><h3 class="sh">PROGRAMMES</h3><div class="grid">
+
+   86  <div class="ncard"><div><h4>🌳 Character &amp; Environment</h4><p>Values, service and care for our surroundings.</p></div></div></div></section>
+   87: <section id="about"><h3 class="sh">ABOUT US</h3><p style="max-width:70ch">Tartar School was established in 1943 with one belief: lasting success is earned through hard work.</p></section>
+   88  <div class="mot">TOIL FOR EXCELLENCE</div>
+
+  104      <p class="hint">No code? Please ask the school admin to generate one for you.</p>
+  105:     <p class="footer">&copy; 2026 Tartar School &middot; Estd. 1943 &middot; <a href="/student.html">Student portal</a> &middot; <a id="toStaff">Staff</a> &middot; <a id="toAdmin">Admin</a></p>
+  106    </form>

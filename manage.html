@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tartar School | Management</title>
+<link rel="icon" href="/crest.png">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,Segoe UI,sans-serif}
+body{background:#f4f5f0;color:#111;font-size:14px}
+header{background:#FFD700;border-bottom:3px solid #111;padding:10px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+header img{width:44px;height:44px;border-radius:8px}
+header b{font-size:17px}
+nav{display:flex;gap:6px;flex-wrap:wrap;flex:1}
+nav button{padding:8px 14px;border:2px solid #111;background:#fff;border-radius:8px;font-weight:600;cursor:pointer}
+nav button.on,nav button:hover{background:#111;color:#FFD700}
+header a.x{color:#111;font-weight:700;text-decoration:none}
+main{max-width:1050px;margin:18px auto;padding:0 14px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+.stat{background:#fff;border-left:5px solid #1b8a2e;border-radius:8px;padding:10px 14px;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.stat small{color:#666;display:block}.stat b{font-size:18px}
+.card{background:#fff;border-radius:10px;padding:16px;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+h2{font-size:16px;margin-bottom:10px}
+.f{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end}
+.f label{font-size:12px;font-weight:600;display:flex;flex-direction:column;gap:3px;flex:1;min-width:130px}
+input,select{padding:9px;border:1px solid #bbb;border-radius:7px;font-size:14px;width:100%}
+input:focus,select:focus{outline:none;border-color:#1b8a2e}
+.b{padding:9px 16px;background:#FFD700;border:2px solid #111;border-radius:7px;font-weight:700;cursor:pointer}
+.b:hover{background:#111;color:#FFD700}
+table{width:100%;border-collapse:collapse;margin-top:10px}
+th{text-align:left;background:#fafae6;font-size:12px}
+th,td{padding:8px 6px;border-bottom:1px solid #eee}
+tr.pick{cursor:pointer}tr.pick:hover{background:#fffbe0}
+a{color:#1b8a2e;font-weight:600;cursor:pointer;margin-right:8px}a.d{color:#c00}
+.red{color:#c00;font-weight:700}.grn{color:#1b8a2e;font-weight:700}
+.chip{display:inline-block;background:#fffbe0;border:1px solid #111;border-radius:20px;padding:3px 10px;margin:4px 4px 0 0}
+.tot{margin-top:12px;font-weight:700}
+.only-print{display:none}
+@media print{header,.np{display:none!important}.only-print{display:block;text-align:center;margin-bottom:12px}body{background:#fff}.card{box-shadow:none}}
+</style>
+</head>
+<body>
+<header class="np">
+  <img src="/crest.png" alt="crest"><b>Tartar School Management</b>
+  <nav id="tabs"></nav>
+  <a class="x" href="/" onclick="sessionStorage.removeItem('tt')">Exit</a>
+</header>
+<main>
+  <div class="stats np" id="stats"></div>
+  <div id="view"></div>
+</main>
+
+<script>
+const token = sessionStorage.getItem("tt");
+if (!token) location = "/";
+window.addEventListener("pageshow", e => { if (e.persisted) location.reload(); });
+const D = { students: [], classes: [], attendance: [], fees: [], results: [], resources: [] };
+const S = { tab: "students", search: "", ac: "", ad: new Date().toISOString().slice(0, 10), fs: "", rs: "", rt: "T1" };
+const TABS = [["students", "Students & Classes"], ["attendance", "Attendance"], ["fees", "Fees"], ["results", "Results"], ["resources", "Learning Resources"], ["admissions", "Admissions"], ["clubs", "Clubs & Societies"], ["logins", "Staff Logins"]];
+const TERMS = { T1: "Term 1", T2: "Term 2", T3: "Term 3" };
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const num = v => parseFloat(v) || 0;
+const money = n => "KES " + num(n).toLocaleString();
+const cls = id => (D.classes.find(c => c.id === id) || {}).name || "-";
+const stu = id => D.students.find(s => s.id === id);
+const opts = (list, val, lab, sel, blank) => (blank ? `<option value="">${blank}</option>` : "") +
+  list.map(x => `<option value="${esc(val(x))}" ${val(x) === sel ? "selected" : ""}>${esc(lab(x))}</option>`).join("");
+const paid = id => D.fees.filter(f => f.student === id).reduce((a, f) => a + num(f.amount), 0);
+const grade = m => m >= 80 ? "A" : m >= 70 ? "B" : m >= 60 ? "C" : m >= 50 ? "D" : "E";
+const slug = s => s.toLowerCase().replace(/[^a-z0-9]/g, "_").slice(0, 20);
+
+async function api(path, body) {
+  const o = { method: body ? "POST" : "GET", headers: { "Content-Type": "application/json", Authorization: "Bearer " + token } };
+  if (body) o.body = JSON.stringify(body);
+  try {
+    const r = await fetch(path, o);
+    if (r.status === 401) { sessionStorage.removeItem("tt"); location = "/"; return {}; }
+    return { ok: r.ok, ...(await r.json().catch(() => ({}))) };
+  } catch { return { ok: false, error: "Cannot reach the server. Is it running?" }; }
+}
+async function load() {
+  for (const c in D) D[c] = (await api("/api/m/" + c)).items || [];
+  render();
+}
+async function save(col, rec) {
+  const r = await api("/api/m/" + col, rec);
+  if (!r.ok) alert(r.error || "Could not save.");
+  return r.ok;
+}
+async function del(col, id, ask) {
+  if (ask && !confirm(ask)) return;
+  const r = await api("/api/m/" + col + "/delete", { id });
+  if (!r.ok) alert(r.error || "Could not delete.");
+  load();
+}
+
+function render() {
+  $("tabs").innerHTML = TABS.map(t => `<button class="${S.tab === t[0] ? "on" : ""}" onclick="S.tab='${t[0]}';render()">${t[1]}</button>`).join("");
+  const collected = D.fees.reduce((a, f) => a + num(f.amount), 0);
+  const total = D.students.reduce((a, s) => a + num(s.fee_total), 0);
+  const today = D.attendance.filter(a => a.date === S.ad);
+  $("stats").innerHTML = [["Students", D.students.length], ["Classes", D.classes.length],
+    ["Fees collected", money(collected)], ["Outstanding", money(Math.max(total - collected, 0))],
+    ["Present on " + S.ad, today.filter(a => a.status !== "Absent").length]]
+    .map(x => `<div class="stat"><small>${x[0]}</small><b>${esc(x[1])}</b></div>`).join("");
+  ({ students: vStudents, attendance: vAtt, fees: vFees, results: vRes, resources: vFiles, admissions: vAdmissions, clubs: vClubs, logins: vLogins })[S.tab]();
+}
+
+/* ---------- Clubs & societies ---------- */
+async function vClubs() {
+  const r = await api("/api/admin/clubs");
+  if (!r.ok) {
+    $("view").innerHTML = `<div class="card"><h2>Club &amp; society requests</h2><p class="red">${esc(r.error || "Could not load requests.")}</p></div>`;
+    return;
+  }
+  const requests = (r.requests || []).slice().reverse();
+  const rows = requests.map(request => {
+    const choices = Array.isArray(request.activities) ? request.activities.map(esc).join(", ") : "";
+    const status = ["Pending", "Approved", "Declined"].includes(request.status) ? request.status : "Pending";
+    return `<tr>
+      <td>${esc(request.student_name || "Unknown learner")}<br><small>${esc(request.class_name || "Class not set")}</small></td>
+      <td>${choices}</td>
+      <td>${esc(request.submitted || "")}</td>
+      <td><select aria-label="Approval status for ${esc(request.student_name || "learner")}" onchange="updateClubRequest('${esc(request.id)}',this.value)">
+        ${["Pending", "Approved", "Declined"].map(value => `<option ${status === value ? "selected" : ""}>${value}</option>`).join("")}
+      </select>${request.reviewed ? `<br><small>Reviewed ${esc(request.reviewed)}</small>` : ""}</td>
+    </tr>`;
+  }).join("") || "<tr><td colspan='4'>No learners have requested club or society membership.</td></tr>";
+  $("view").innerHTML = `<div class="card"><h2>Club &amp; society requests (${requests.length})</h2>
+    <p style="color:#666">Learners may request up to two activities. Review each request with the learner's age, interests, club capacity and school safeguarding arrangements in mind.</p>
+    <p><b>Available activities:</b> ${(r.activities || []).map(esc).join(", ")}</p>
+    <table><tr><th>Learner</th><th>Requested activities</th><th>Submitted</th><th>Status</th></tr>${rows}</table></div>`;
+}
+async function updateClubRequest(id, status) {
+  const r = await api("/api/admin/clubs/update", { id, status });
+  if (!r.ok) { alert(r.error || "Could not update the club request."); return vClubs(); }
+  vClubs();
+}
+
+/* ---------- Admission applications ---------- */
+async function vAdmissions() {
+  const r = await api("/api/admin/admissions");
+  if (!r.ok) {
+    $("view").innerHTML = `<div class="card"><h2>Admission applications</h2><p class="red">${esc(r.error || "Could not load applications.")}</p></div>`;
+    return;
+  }
+  const applications = (r.applications || []).slice().reverse();
+  const rows = applications.map(a => `<tr>
+    <td>${esc(a.learner_name)}<br><small>DOB: ${esc(a.date_of_birth)} · ${esc(a.grade)}</small></td>
+    <td>${esc(a.guardian_name)}<br><small>${esc(a.guardian_phone)}</small></td>
+    <td>${esc(a.submitted)}</td>
+    <td><select aria-label="Application status for ${esc(a.learner_name)}" onchange="updateAdmission('${esc(a.id)}',this.value)">
+      ${["New", "Contacted", "Accepted", "Declined"].map(status => `<option ${a.status === status ? "selected" : ""}>${status}</option>`).join("")}
+    </select></td>
+    <td><a class="d" onclick="deleteAdmission('${esc(a.id)}')">Delete</a></td>
+  </tr>`).join("") || "<tr><td colspan='5'>No admission applications received.</td></tr>";
+  $("view").innerHTML = `<div class="card"><h2>Admission applications (${applications.length})</h2>
+    <p style="color:#666">Applications contain personal information. Review them only for school admissions and keep access restricted.</p>
+    <table><tr><th>Learner</th><th>Parent / guardian</th><th>Submitted</th><th>Status</th><th></th></tr>${rows}</table></div>`;
+}
+async function updateAdmission(id, status) {
+  const r = await api("/api/admin/admissions/update", { id, status });
+  if (!r.ok) { alert(r.error || "Could not update the application."); return vAdmissions(); }
+}
+async function deleteAdmission(id) {
+  if (!confirm("Delete this admission application? This cannot be undone.")) return;
+  const r = await api("/api/admin/admissions/delete", { id });
+  if (!r.ok) { alert(r.error || "Could not delete the application."); return; }
+  vAdmissions();
+}
+
+/* ---------- Students & classes ---------- */
+const complete = s => s.first && s.surname && s.adm && s.class && s.g1_first && s.g1_surname && s.g1_id && s.g1_phone;
+const access = s => !complete(s) ? "Incomplete profile" : (num(s.fee_total) > 0 && paid(s.id) >= num(s.fee_total) ? "Ready" : "Fees pending");
+const gline = (s, n) => s["g" + n + "_first"] ? `${esc([s["g" + n + "_first"], s["g" + n + "_middle"], s["g" + n + "_surname"]].filter(Boolean).join(" "))} (${esc(s["g" + n + "_rel"] || "Guardian")})<br><small>ID ${esc(s["g" + n + "_id"])} · ${esc(s["g" + n + "_phone"])}</small><br>` : "";
+const gblock = (n, title) => `<h2 style="margin-top:14px">${title}</h2>
+    <div class="f"><label>Relationship<select id="f_g${n}rel">${["Mother", "Father", "Guardian"].map(x => `<option>${x}</option>`).join("")}</select></label>
+      <label>First name<input id="f_g${n}first"></label><label>Middle name<input id="f_g${n}middle"></label><label>Surname<input id="f_g${n}surname"></label></div>
+    <div class="f" style="margin-top:8px"><label>ID number<input id="f_g${n}id"></label><label>Phone number<input id="f_g${n}phone" type="tel"></label></div>`;
+function vStudents() {
+  const q = S.search.toLowerCase();
+  const rows = D.students.filter(s => ((s.name || "") + s.adm).toLowerCase().includes(q)).map(s => { const a = access(s);
+    return `<tr><td>${esc(s.adm)}</td><td>${esc(s.name)}</td><td>${esc(cls(s.class))}</td><td>${gline(s, 1)}${gline(s, 2)}</td><td>${money(s.fee_total)}</td>
+     <td class="${a === "Ready" ? "grn" : "red"}">${a}</td>
+     <td><a onclick="editS('${s.id}')">Edit</a><a class="d" onclick="del('students','${s.id}','Delete this student and all their records?')">Delete</a></td></tr>`; }).join("")
+    || "<tr><td colspan='7'>No students yet.</td></tr>";
+  $("view").innerHTML = `
+  <div class="card"><h2>Classes</h2>
+    <div class="f"><label>Class name<input id="c_name" placeholder="e.g. Grade 4 East"></label>
+      <label>Class teacher<input id="c_teacher"></label>
+      <label>Level<select id="c_level"><option value="">Select level</option><option value="pre">Pre-Primary</option><option value="primary">Primary</option><option value="junior">Junior School</option></select></label><button class="b" onclick="addC()">Add class</button></div>
+    <div>${D.classes.map(c => `<span class="chip">${esc(c.name)}${c.teacher ? " · " + esc(c.teacher) : ""}${c.level ? " · " + ({pre:"Pre-Primary",primary:"Primary",junior:"Junior School"}[c.level] || "") : ""} <a class="d" onclick="del('classes','${c.id}','Delete this class?')">✕</a></span>`).join("")}</div></div>
+  <div class="card"><h2>Learner profile</h2><input type="hidden" id="f_id">
+    <div class="f"><label>First name<input id="f_first"></label><label>Middle name<input id="f_middle"></label>
+      <label>Surname<input id="f_surname"></label></div>
+    <div class="f" style="margin-top:8px"><label>Admission no. (learner password)<input id="f_adm"></label>
+      <label>Class<select id="f_class">${opts(D.classes, c => c.id, c => c.name, "", "Select class")}</select></label>
+      <label>Total fees (KES)<input id="f_fee" type="number" min="0"></label></div>
+    ${gblock(1, "Parent / guardian 1 (required)")}
+    ${gblock(2, "Parent / guardian 2 (optional, e.g. the other parent)")}
+    <button class="b" style="margin-top:12px" onclick="saveS()">Save student</button>
+    <p style="margin-top:8px;color:#666">The learner can use the portal once their names, admission number and parent/guardian 1 (names, ID and phone) are captured and fees are fully paid. Middle names are optional.</p></div>
+  <div class="card"><h2>Students</h2><input placeholder="Search name or admission no." value="${esc(S.search)}" oninput="S.search=this.value;vStudents();this.focus()">
+    <table><tr><th>Adm</th><th>Name</th><th>Class</th><th>Guardian</th><th>Fees</th><th>Portal access</th><th></th></tr>${rows}</table></div>`;
+}
+async function addC() {
+  const name = $("c_name").value.trim();
+  if (!name) return alert("Enter a class name.");
+  if (!$("c_level").value) return alert("Choose the level for this class.");
+  if (await save("classes", { name, teacher: $("c_teacher").value.trim(), level: $("c_level").value })) load();
+}
+const FM = { id: "id", first: "first", middle: "middle", surname: "surname", adm: "adm", class: "class", fee: "fee_total" };
+[1, 2].forEach(n => ["rel", "first", "middle", "surname", "id", "phone"].forEach(k => FM["g" + n + k] = "g" + n + "_" + k));
+function editS(id) {
+  const s = stu(id);
+  for (const k in FM) $("f_" + k).value = s[FM[k]] ?? "";
+  window.scrollTo(0, 0);
+}
+async function saveS() {
+  const r = { id: $("f_id").value || undefined };
+  for (const k in FM) if (k !== "id") r[FM[k]] = k === "fee" ? num($("f_fee").value) : $("f_" + k).value.trim();
+  if (!r.first || !r.surname || !r.adm || !r.class) return alert("First name, surname, admission number and class are required.");
+  if (r.g2_first && !(r.g2_surname && r.g2_id && r.g2_phone)) return alert("Guardian 2 needs a surname, ID number and phone number (or clear that section).");
+  if (await save("students", r)) load();
+}
+
+/* ---------- Attendance ---------- */
+function vAtt() {
+  if (!S.ac && D.classes.length) S.ac = D.classes[0].id;
+  const list = D.students.filter(s => s.class === S.ac);
+  const rows = list.map(s => {
+    const mine = D.attendance.filter(a => a.student === s.id);
+    const pct = mine.length ? Math.round(mine.filter(a => a.status !== "Absent").length * 100 / mine.length) + "%" : "-";
+    const cur = (D.attendance.find(a => a.id === S.ad + "|" + s.id) || {}).status || "Present";
+    return `<tr><td>${esc(s.name)}</td><td>${["Present", "Absent", "Late"].map(v =>
+      `<label style="margin-right:10px"><input type="radio" style="width:auto" name="st_${s.id}" value="${v}" ${cur === v ? "checked" : ""}> ${v}</label>`).join("")}</td><td>${pct}</td></tr>`;
+  }).join("") || "<tr><td colspan='3'>No students in this class.</td></tr>";
+  $("view").innerHTML = `<div class="card"><h2>Take attendance</h2>
+    <div class="f"><label>Class<select onchange="S.ac=this.value;render()">${opts(D.classes, c => c.id, c => c.name, S.ac, D.classes.length ? "" : "No classes yet")}</select></label>
+      <label>Date<input type="date" value="${S.ad}" onchange="S.ad=this.value;render()"></label>
+      <button class="b" onclick="saveAtt()">Save attendance</button></div>
+    <table><tr><th>Student</th><th>Status</th><th>Overall attendance</th></tr>${rows}</table></div>`;
+}
+async function saveAtt() {
+  const list = D.students.filter(s => s.class === S.ac);
+  const res = await Promise.all(list.map(s => {
+    const v = (document.querySelector(`input[name="st_${s.id}"]:checked`) || {}).value || "Present";
+    return save("attendance", { id: S.ad + "|" + s.id, date: S.ad, class: S.ac, student: s.id, status: v });
+  }));
+  if (res.every(Boolean)) { await load(); alert("Attendance saved."); }
+}
+
+/* ---------- Fees ---------- */
+function vFees() {
+  const rows = D.students.map(s => {
+    const p = paid(s.id), bal = num(s.fee_total) - p;
+    return `<tr class="pick" onclick="S.fs='${s.id}';render()"><td>${esc(s.name)}</td><td>${esc(cls(s.class))}</td><td>${money(s.fee_total)}</td><td>${money(p)}</td><td class="${bal > 0 ? "red" : "grn"}">${money(bal)}</td></tr>`;
+  }).join("") || "<tr><td colspan='5'>No students yet.</td></tr>";
+  const s = stu(S.fs);
+  const pay = s ? `<div class="card"><h2>Payments: ${esc(s.name)}</h2>
+    <div class="f"><label>Amount (KES)<input id="p_amt" type="number" min="1"></label>
+      <label>Date<input id="p_date" type="date" value="${new Date().toISOString().slice(0, 10)}"></label>
+      <label>Method<select id="p_m"><option>M-Pesa</option><option>Cash</option><option>Bank</option><option>Cheque</option></select></label>
+      <button class="b" onclick="addPay()">Record payment</button></div>
+    <table><tr><th>Date</th><th>Method</th><th>Amount</th><th></th></tr>${D.fees.filter(f => f.student === s.id).sort((a, b) => b.paid_on.localeCompare(a.paid_on)).map(f =>
+      `<tr><td>${esc(f.paid_on)}</td><td>${esc(f.method)}</td><td>${money(f.amount)}</td><td><a class="d" onclick="del('fees','${f.id}','Delete this payment?')">Delete</a></td></tr>`).join("") || "<tr><td colspan='4'>No payments yet.</td></tr>"}</table></div>` : "";
+  $("view").innerHTML = `<div class="card"><h2>Fee balances <small style="font-weight:400">(click a student to record payments)</small></h2>
+    <table><tr><th>Student</th><th>Class</th><th>Total fees</th><th>Paid</th><th>Balance</th></tr>${rows}</table></div>${pay}`;
+}
+async function addPay() {
+  const amount = num($("p_amt").value);
+  if (amount <= 0) return alert("Enter a valid amount.");
+  if (await save("fees", { student: S.fs, amount, paid_on: $("p_date").value, method: $("p_m").value })) load();
+}
+
+/* ---------- Results & report cards ---------- */
+function vRes() {
+  const s = stu(S.rs), rows = s ? D.results.filter(r => r.student === s.id && r.term === S.rt) : [];
+  const total = rows.reduce((a, r) => a + num(r.score), 0), mean = rows.length ? total / rows.length : 0;
+  const card = s ? `<div class="card"><div class="only-print"><h2>Tartar School: Report Card</h2><p>Toil for Excellence</p></div>
+    <h2>${esc(s.name)} · ${esc(cls(s.class))} · ${TERMS[S.rt]}</h2>
+    <table><tr><th>Subject</th><th>Score</th><th>Grade</th><th class="np"></th></tr>${rows.map(r =>
+      `<tr><td>${esc(r.subject)}</td><td>${num(r.score)}</td><td>${grade(num(r.score))}</td><td class="np"><a class="d" onclick="del('results','${r.id}')">Delete</a></td></tr>`).join("") || "<tr><td colspan='4'>No marks entered yet.</td></tr>"}</table>
+    <p class="tot">Total: ${total} &nbsp; Mean: ${mean.toFixed(1)} &nbsp; Overall grade: ${rows.length ? grade(mean) : "-"}</p>
+    <button class="b np" style="margin-top:12px" onclick="window.print()">Print report card</button></div>` : "";
+  $("view").innerHTML = `<div class="card np"><h2>Enter marks</h2>
+    <div class="f"><label>Student<select onchange="S.rs=this.value;render()">${opts(D.students, x => x.id, x => x.name + " (" + cls(x.class) + ")", S.rs, "Select student")}</select></label>
+      <label>Term<select onchange="S.rt=this.value;render()">${opts(Object.keys(TERMS), k => k, k => TERMS[k], S.rt)}</select></label>
+      <label>Subject<input id="r_sub" list="subs" placeholder="e.g. Mathematics"><datalist id="subs">${["Mathematics", "English", "Kiswahili", "Science", "Social Studies", "CRE"].map(x => `<option>${x}</option>`).join("")}</datalist></label>
+      <label>Score (0-100)<input id="r_score" type="number" min="0" max="100"></label>
+      <button class="b" onclick="addRes()">Save mark</button></div></div>${card}`;
+}
+async function addRes() {
+  const subject = $("r_sub").value.trim(), score = num($("r_score").value);
+  if (!S.rs || !subject) return alert("Choose a student and enter a subject.");
+  if (score < 0 || score > 100 || $("r_score").value === "") return alert("Score must be 0 to 100.");
+  if (await save("results", { id: S.rs + "|" + S.rt + "|" + slug(subject), student: S.rs, term: S.rt, subject, score })) load();
+}
+
+/* ---------- Learning resources ---------- */
+function vFiles() {
+  const rows = D.resources.map(x => `<tr><td>${esc(x.title)}</td><td>${esc(x.subject)}</td><td>${x.class ? esc(cls(x.class)) : "All classes"}</td><td>${esc(x.filename)}</td>
+    <td><a class="d" onclick="del('resources','${x.id}','Delete this resource?')">Delete</a></td></tr>`).join("") || "<tr><td colspan='5'>No resources yet.</td></tr>";
+  $("view").innerHTML = `<div class="card"><h2>Upload learning resource</h2>
+    <div class="f"><label>Title<input id="u_title" placeholder="e.g. Fractions notes"></label><label>Subject<input id="u_sub"></label>
+      <label>For class<select id="u_class">${opts(D.classes, c => c.id, c => c.name, "", "All classes")}</select></label></div>
+    <div class="f" style="margin-top:8px"><label>File (pdf, doc, ppt, xls, txt, image · max 8 MB)<input id="u_file" type="file"></label>
+      <button class="b" onclick="upload()">Upload</button></div></div>
+    <div class="card"><h2>Resources</h2><table><tr><th>Title</th><th>Subject</th><th>Class</th><th>File</th><th></th></tr>${rows}</table></div>`;
+}
+async function upload() {
+  const f = $("u_file").files[0], title = $("u_title").value.trim();
+  if (!f || !title) return alert("Enter a title and choose a file.");
+  if (f.size > 8 * 1024 * 1024) return alert("File must be under 8 MB.");
+  const data = await new Promise((res, rej) => { const rd = new FileReader(); rd.onload = () => res(rd.result.split(",")[1]); rd.onerror = rej; rd.readAsDataURL(f); });
+  const r = await api("/api/admin/upload", { title, subject: $("u_sub").value.trim(), class: $("u_class").value, filename: f.name, data });
+  if (!r.ok) return alert(r.error || "Upload failed.");
+  load();
+}
+
+/* ---------- Staff logins ---------- */
+async function vLogins() {
+  const r = await api("/api/admin/users"), tmp = S.tmp; S.tmp = null;
+  const rows = (r.users || []).map(u => `<tr><td>${esc(u.username)}</td><td>${esc(u.name)}</td><td>${esc(u.role)}</td>
+    <td><input type="tel" id="phone_${esc(u.username)}" value="${esc(u.phone || "")}" placeholder="+254712345678" aria-label="OTP phone for ${esc(u.username)}">
+      <button class="b" style="margin-top:4px" onclick="saveUserPhone('${esc(u.username)}')">Save phone</button></td>
+    <td>${esc(u.last_login || "never")}${u.must_change ? ' <span class="red">(temporary password)</span>' : ""}</td>
+    <td><a onclick="resetU('${esc(u.username)}')">Reset password</a><a class="d" onclick="delU('${esc(u.username)}')">Delete</a></td></tr>`).join("")
+    || "<tr><td colspan='6'>No staff logins yet.</td></tr>";
+  $("view").innerHTML = `<div class="card"><h2>Create staff login</h2>
+    <div class="f"><label>Full name<input id="l_name"></label><label>Username<input id="l_user" placeholder="e.g. jkamau" autocomplete="off"></label>
+      <label>Role<select id="l_role"><option value="principal">Head of institution (principal)</option><option value="bursar">Bursar</option></select></label>
+      <label>OTP phone<input id="l_phone" type="tel" placeholder="+254712345678" required></label>
+      <button class="b" onclick="createU()">Create login</button></div>
+    ${tmp ? `<div class="card" style="background:#fffbe0;margin:12px 0 0"><b>${esc(tmp.who)}</b> temporary password:
+      <span style="font-family:monospace;font-size:20px;letter-spacing:2px">${esc(tmp.pw)}</span><br><small>Shown only once. Give it to them; they must choose their own password at first login.</small></div>` : ""}</div>
+    <div class="card"><h2>Staff logins</h2>
+    <p style="color:#666;margin-bottom:6px">Principal = head of institution: sees and changes everything, and adds teachers, deputies and senior teachers (with their logins) on the Staff page. Bursar: fees, finance and boarder admissions. Staff sign in with the <b>Staff</b> link on the main login page.</p>
+    <p style="color:#666;margin-bottom:6px">Set or update each account’s phone used for sign-in verification. Staff with a linked staff profile may use that profile’s phone.</p>
+    <table><tr><th>Username</th><th>Name</th><th>Role</th><th>OTP phone</th><th>Last login</th><th></th></tr>${rows}</table></div>`;
+}
+async function createU() {
+  const user = $("l_user").value.trim().toLowerCase();
+  const r = await api("/api/admin/users", { name: $("l_name").value, username: user, role: $("l_role").value, phone: $("l_phone").value });
+  if (!r.ok) return alert(r.error || "Could not create the login.");
+  S.tmp = { who: user, pw: r.temp }; render();
+}
+async function saveUserPhone(user) {
+  const r = await api("/api/admin/users/phone", { username: user, phone: $("phone_" + user).value });
+  if (!r.ok) return alert(r.error || "Could not save the phone number.");
+  alert("OTP phone saved. This account will need to sign in again.");
+  render();
+}
+async function resetU(user) {
+  if (!confirm("Reset the password for " + user + "? They will be logged out.")) return;
+  const r = await api("/api/admin/users/reset", { username: user });
+  if (!r.ok) return alert(r.error || "Could not reset.");
+  S.tmp = { who: user, pw: r.temp }; render();
+}
+async function delU(user) {
+  if (!confirm("Delete the login for " + user + "?")) return;
+  const r = await api("/api/admin/users/delete", { username: user });
+  if (!r.ok) return alert(r.error || "Could not delete.");
+  render();
+}
+
+load();
+</script>
+</body>
+</html>

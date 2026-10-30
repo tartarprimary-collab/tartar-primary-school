@@ -1,0 +1,74 @@
+{
+ "classes": [
+  {
+   "name": "9 GREEN",
+   "teacher": "MD FAITH PACHA",
+   "id": "03d89c39"
+  },
+  {
+   "name": "9 white",
+   "teacher": "madam joyce",
+   "id": "fdbc625b"
+  }
+ ],
+ "students": [
+  {
+   "name": "NANJALA SARAH SOITA",
+   "first": "NANJALA",
+   "middle": "SARAH",
+   "surname": "SOITA",
+   "adm": "822",
+   "class": "03d89c39",
+   "fee_total": 3939,
+   "g1_rel": "Father",
+   "g1_first": "KENNEDY",
+   "g1_middle": "ALFAYO",
+   "g1_surname": "MASAFU",
+   "g1_id": "4066226",
+   "g1_phone": "0721148445",
+   "g2_rel": "Mother",
+   "g2_first": "",
+   "g2_middle": "",
+   "g2_surname": "",
+   "g2_id": "",
+   "g2_phone": "",
+   "id": "eddd249c"
+  }
+ ],
+ "fees": [
+  {
+   "student": "eddd249c",
+   "amount": 8000,
+   "paid_on": "2026-10-25",
+   "method": "M-Pesa",
+   "id": "48e0fd70"
+  }
+ ],
+ "resources": [
+  {
+   "id": "20aa11e0004c",
+   "title": "TERM 3 GRADE SEVEN REVISION PAPER",
+   "filename": "GRADE-7-MATHEMATICS-QS-3T-2024-TEACHER.CO_.KE_-4 (1).docx",
+   "subject": "MATHEMATICS",
+   "class": "03d89c39"
+  }
+ ],
+ "attendance": [
+  {
+   "date": "2026-10-27",
+   "class": "03d89c39",
+   "student": "eddd249c",
+   "status": "Present",
+   "id": "2026-10-27|eddd249c"
+  }
+ ],
+ "results": [
+  {
+   "student": "eddd249c",
+   "term": "T1",
+   "subject": "Mathematics",
+   "score": 90,
+   "id": "eddd249c|T1|mathematics"
+  }
+ ]
+}

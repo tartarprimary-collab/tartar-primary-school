@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="title desc">
+  <title id="title">Tree planting day</title>
+  <desc id="desc">A learner plants a young tree in a green school garden.</desc>
+  <defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#A9CBD3"/><stop offset="1" stop-color="#E9D9A6"/></linearGradient></defs>
+  <path fill="url(#sky)" d="M0 0h640v360H0z"/>
+  <circle cx="523" cy="80" r="42" fill="#D9B44A"/>
+  <path fill="#B7D1BF" d="M0 223q154-54 306 0t334 0v137H0z"/>
+  <path fill="#2F6B4A" d="M0 276q155-49 314 0t326 0v84H0z"/>
+  <path fill="#7A5230" d="M400 190h34v123h-34z"/>
+  <path fill="#2F6B4A" d="M416 43l-72 98h47l-66 78h180l-67-78h48z"/>
+  <path fill="#D9B44A" d="M374 299q45-30 90 0l-10 17h-70z"/>
+  <path fill="#8C5A3C" d="M191 183q14-43 66-30l19 28q-39-15-80 16z"/>
+  <circle cx="229" cy="188" r="31" fill="#A86B4A"/>
+  <path fill="#2C5A7A" d="M191 216h67l35 105h-131z"/>
+  <path fill="#D9B44A" d="M203 233l-40 48 14 13 50-42zm54 0l38 40 14-13-36-48z"/>
+  <path fill="#A86B4A" d="M161 279l-12 14 16 11 13-14zm148-10l12-12 14 15-14 15z"/>
+  <path fill="#7A5230" d="M79 313q81-45 161 0v18H79z"/>
+  <path fill="#F1EBDA" d="M86 311q71-25 144 0l-8 11H94z"/>
+</svg>

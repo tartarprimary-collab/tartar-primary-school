@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="title desc">
+  <title id="title">Admissions open</title>
+  <desc id="desc">An open school gate and an admission form ready for a family.</desc>
+  <defs><linearGradient id="bg" x2="0" y2="1"><stop stop-color="#C3D3E0"/><stop offset="1" stop-color="#F1EBDA"/></linearGradient></defs>
+  <path fill="url(#bg)" d="M0 0h640v360H0z"/>
+  <path fill="#B7D1BF" d="M0 255q180-72 346 0t294 0v105H0z"/>
+  <path fill="#2F6B4A" d="M0 302q148-49 306 0t334 0v58H0z"/>
+  <path fill="#1F3A2E" d="M60 93h28v238H60zm239 0h28v238h-28z"/>
+  <path fill="#D9B44A" d="M88 107l115-28v212L88 318zm211 0l-115-28v212l115 27z"/>
+  <path fill="none" stroke="#1F3A2E" stroke-width="8" d="M111 123v166m46-177v166m46-177v166m46-166v166m-133-93l115-27m-115 83l115-27m46-29l-115-27m115 83l-115-27"/>
+  <path fill="#fff" stroke="#1F3A2E" stroke-width="8" d="M375 48h184v251H375z"/>
+  <path fill="#2C5A7A" d="M375 48h184v46H375z"/>
+  <path fill="#1F3A2E" d="M401 120h120v13H401zm0 37h120v13H401zm0 37h73v13h-73z"/>
+  <path fill="#B7D1BF" stroke="#2F6B4A" stroke-width="6" d="M401 223h22v22h-22zm0 43h22v22h-22z"/>
+  <path fill="none" stroke="#2F6B4A" stroke-width="6" d="M405 233l6 6 12-14m-18 51l6 6 12-14"/>
+  <path fill="#D9B44A" d="M491 227h39v72h-39z"/>
+  <circle cx="528" cy="258" r="6" fill="#1F3A2E"/>
+</svg>

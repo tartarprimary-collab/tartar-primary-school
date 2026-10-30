@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Finance — Tartar School</title>
+<link rel="icon" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+<div id="shell" class="shell">
+  <div class="shell-content">
+    <main id="main" class="main">
+
+      <div class="page-header">
+        <div>
+          <div class="eyebrow">Bursar</div>
+          <h1>Finance</h1>
+          <p class="desc">Government capitation, boarding fees, and Term 3 cashflow.</p>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn btn-outline" id="btnExpense">Log expense</button>
+          <button type="button" class="btn btn-primary" id="btnReceipt">Record receipt</button>
+        </div>
+      </div>
+
+      <div class="kpi-grid cols-4" id="kpiGrid"></div>
+
+      <div class="card card-pad mt-4">
+        <div class="card-title">Capitation by school section</div>
+        <p class="small muted mt-1">Government capitation per learner a year: KSh 1,420 (Primary) and KSh 15,042 (Junior School). Pre-Primary has no national capitation. Rates can be updated in data.js.</p>
+        <div class="table-wrap mt-3">
+          <table>
+            <thead><tr><th>Section</th><th>Learners</th><th>Entitlement</th><th>Received</th><th>Outstanding</th></tr></thead>
+            <tbody id="capBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="tabs-wrap mt-4">
+        <div class="tabs-list">
+          <button type="button" class="tab-btn active" data-tab="register">Fee register</button>
+          <button type="button" class="tab-btn" data-tab="receipts">Receipts</button>
+          <button type="button" class="tab-btn" data-tab="expenses">Expenses</button>
+          <button type="button" class="tab-btn" data-tab="pledges">Pledges</button>
+        </div>
+
+        <div class="tab-panel" data-panel="register">
+          <div class="controls-row"><input type="search" id="regSearch" placeholder="Search student" style="flex:1;min-width:180px;"></div>
+          <div class="table-wrap"><table><thead><tr><th>Student</th><th>Billed</th><th>Paid</th><th>Balance</th></tr></thead><tbody id="regBody"></tbody></table></div>
+        </div>
+        <div class="tab-panel" data-panel="receipts" hidden>
+          <div class="table-wrap"><table><thead><tr><th>Student</th><th>Method</th><th>Ref</th><th>Date</th><th>Amount</th></tr></thead><tbody id="receiptBody"></tbody></table></div>
+        </div>
+        <div class="tab-panel" data-panel="expenses" hidden>
+          <div class="table-wrap"><table><thead><tr><th>Category</th><th>Note</th><th>Date</th><th>Amount</th></tr></thead><tbody id="expenseBody"></tbody></table></div>
+        </div>
+        <div class="tab-panel" data-panel="pledges" hidden>
+          <div class="stack" id="pledgeBody"></div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<div id="toast-root" class="toast-root"></div>
+<div id="overlay-root"></div>
+
+<script src="../assets/js/data.js"></script>
+<script src="../assets/js/shell.js"></script>
+<script>Shell.init('finance');</script>
+<script src="../assets/js/finance.js"></script>
+</body>
+</html>

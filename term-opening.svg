@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="title desc">
+  <title id="title">Term opening</title>
+  <desc id="desc">A school at sunrise beside a January calendar.</desc>
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#A9CBD3"/><stop offset="1" stop-color="#F1EBDA"/></linearGradient>
+    <linearGradient id="sun" x2="0" y2="1"><stop stop-color="#F2D779"/><stop offset="1" stop-color="#D9B44A"/></linearGradient>
+  </defs>
+  <path fill="url(#sky)" d="M0 0h640v360H0z"/>
+  <circle cx="120" cy="105" r="52" fill="url(#sun)"/>
+  <path fill="#B7D1BF" d="M0 240q120-64 242 0t242 0 156 0v120H0z"/>
+  <path fill="#2F6B4A" d="M0 282q144-53 300 0t340 0v78H0z"/>
+  <path fill="#F8F4E8" stroke="#1F3A2E" stroke-width="8" d="M91 194h276v139H91z"/>
+  <path fill="#D9B44A" stroke="#1F3A2E" stroke-width="8" d="M72 180h314v43H72z"/>
+  <path fill="#2C5A7A" d="M111 253h58v80h-58zm92 0h58v46h-58z"/>
+  <path fill="#7A5230" d="M285 272h47v61h-47z"/>
+  <path fill="#fff" stroke="#1F3A2E" stroke-width="7" d="M432 91h151v207H432z"/>
+  <path fill="#2F6B4A" d="M432 91h151v50H432z"/>
+  <path fill="#D9B44A" d="M460 75h17v40h-17zm79 0h17v40h-17z"/>
+  <g fill="#1F3A2E"><circle cx="468" cy="173" r="8"/><circle cx="507" cy="173" r="8"/><circle cx="547" cy="173" r="8"/><circle cx="468" cy="211" r="8"/><circle cx="507" cy="211" r="8"/><circle cx="547" cy="211" r="8"/></g>
+  <path fill="#D9B44A" d="M500 234h16v47h-16z"/>
+</svg>

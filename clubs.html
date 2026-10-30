@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Clubs &amp; Societies — Tartar School</title>
+<link rel="icon" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+<div id="shell" class="shell">
+  <div class="shell-content">
+    <main id="main" class="main">
+      <div class="page-header">
+        <div>
+          <div class="eyebrow">Learner activities</div>
+          <h1>Clubs &amp; Societies</h1>
+          <p class="desc">Review learner activity choices and approve participation.</p>
+        </div>
+        <div class="actions"><button type="button" class="btn btn-outline" id="refreshClubs">Refresh requests</button></div>
+      </div>
+      <div id="clubNotice" class="card card-pad mt-4" aria-live="polite">Loading club requests…</div>
+      <div id="clubRequests" class="stack mt-4"></div>
+    </main>
+  </div>
+</div>
+<div id="toast-root" class="toast-root"></div>
+<div id="overlay-root"></div>
+<script src="../assets/js/data.js"></script>
+<script src="../assets/js/shell.js"></script>
+<script>Shell.init("clubs");</script>
+<script src="../assets/js/clubs.js"></script>
+</body>
+</html>

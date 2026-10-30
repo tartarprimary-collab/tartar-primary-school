@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Students — Tartar School</title>
+<link rel="icon" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+<div id="shell" class="shell">
+  <div class="shell-content">
+    <main id="main" class="main">
+
+      <div class="page-header">
+        <div>
+          <div class="eyebrow">Registry</div>
+          <h1>Students</h1>
+          <p class="desc" id="pageDesc">Learners on the roll across Pre-Primary, Primary &amp; Junior School.</p>
+        </div>
+        <div class="actions"><button type="button" class="btn btn-primary" id="btnAdmit">Admit student</button></div>
+      </div>
+
+      <div class="controls-row">
+        <input type="search" id="fSearch" placeholder="Search name, admission, parent" style="flex:1;min-width:180px;">
+        <div class="select-wrap"><select id="fGrade"><option value="all">All grades</option></select></div>
+        <div class="select-wrap"><select id="fGroup"><option value="all">All streams</option></select></div>
+        <div class="select-wrap"><select id="fProfile" aria-label="Filter by learner record completeness"><option value="all">All records</option><option value="incomplete">Needs details</option><option value="complete">Details recorded</option></select></div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Adm</th><th>Student</th><th>Class</th><th>Attend.</th><th>Fees</th></tr></thead>
+          <tbody id="studentBody"></tbody>
+        </table>
+      </div>
+      <p class="small muted mt-3" id="countNote"></p>
+
+    </main>
+  </div>
+</div>
+
+<div id="toast-root" class="toast-root"></div>
+<div id="overlay-root"></div>
+
+<script src="../assets/js/data.js"></script>
+<script src="../assets/js/pdfkit-mini.js"></script>
+<script src="../assets/js/reports.js"></script>
+<script src="../assets/js/shell.js"></script>
+<script>Shell.init('students');</script>
+<script src="../assets/js/students.js"></script>
+</body>
+</html>

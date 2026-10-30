@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="title desc">
+  <title id="title">Science fair</title>
+  <desc id="desc">A student presents a colorful bubbling experiment at a science fair.</desc>
+  <defs><linearGradient id="bg" x2="0" y2="1"><stop stop-color="#BFD9DD"/><stop offset="1" stop-color="#F1EBDA"/></linearGradient></defs>
+  <path fill="url(#bg)" d="M0 0h640v360H0z"/>
+  <circle cx="510" cy="82" r="32" fill="#fff" opacity=".65"/>
+  <path fill="#fff" stroke="#1F3A2E" stroke-width="8" d="M74 70h236v194H74z"/>
+  <path fill="#2F6B4A" d="M74 70h236v48H74z"/>
+  <path fill="#1F3A2E" d="M104 142h174v12H104zm0 31h139v12H104zm0 31h158v12H104z"/>
+  <path fill="#D9B44A" d="M202 226h49v23h-49z"/>
+  <path fill="#E9D9A6" stroke="#1F3A2E" stroke-width="8" d="M370 208h191v101H370z"/>
+  <path fill="#2C5A7A" d="M390 228h52v63h-52z"/>
+  <path fill="#B7D1BF" d="M459 228h82v15h-82zm0 28h64v12h-64zm0 24h73v12h-73z"/>
+  <path fill="#2F6B4A" d="M170 260h99v100H170z"/>
+  <circle cx="220" cy="172" r="39" fill="#8C5A3C"/>
+  <path fill="#1F3A2E" d="M180 165q9-54 78-30l8 25q-44-24-86 8z"/>
+  <path fill="#2C5A7A" d="M181 211h78l32 112H149z"/>
+  <path fill="#D9B44A" d="M255 225l42 38-13 13-51-27z"/>
+  <path fill="#8C5A3C" d="M285 244l21 14-10 15-23-14z"/>
+  <path fill="#F2D779" stroke="#1F3A2E" stroke-width="7" d="M322 182h43v48h-43z"/>
+  <path fill="none" stroke="#1F3A2E" stroke-width="7" d="M331 182v-37h24v37"/>
+  <circle cx="344" cy="171" r="8" fill="#D9B44A"/><circle cx="352" cy="151" r="5" fill="#2F6B4A"/>
+</svg>

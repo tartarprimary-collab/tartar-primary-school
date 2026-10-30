@@ -1,0 +1,209 @@
+[
+ {
+  "username": "nyoka-kubwa",
+  "name": "PIUS P LOKWAPETA",
+  "role": "principal",
+  "salt": "dbb3e0378fdd087fa7d3a3d8922ce22e",
+  "hash": "506881f1d18d73941baa7ba290494251112cbf8cd40b3a422b017a0d9ad4261e",
+  "must_change": false,
+  "created": "2026-10-19 08:59",
+  "last_login": "2026-10-25 14:23"
+ },
+ {
+  "username": "kenyatta",
+  "name": "MR ALFRED KENYATTA LOSIANGURA",
+  "role": "teacher",
+  "staffId": "sf_8hxu1i4",
+  "salt": "76fe1b5f6496db8e1f786416c0273540",
+  "hash": "601dbc5416d83b091a0032787824cd18b3a1c7dec00350b966c76873d2ac12c4",
+  "must_change": false,
+  "created": "2026-10-19 09:03",
+  "last_login": "2026-10-19 09:05"
+ },
+ {
+  "username": "cintel-chege",
+  "name": "MISS CHEGE",
+  "role": "teacher",
+  "staffId": "sf_zej4m5w",
+  "salt": "320e2ee553231764aeb7a2d026928df1",
+  "hash": "62c46a9e7de1014afc56792c91d15fec7bddf6e89687b6b12f734968538617be",
+  "must_change": false,
+  "created": "2026-10-19 09:11",
+  "last_login": "2026-10-19 09:15"
+ },
+ {
+  "username": "robert",
+  "name": "MR ROBERT MAIPONG",
+  "role": "teacher",
+  "staffId": "sf_rdihcct",
+  "salt": "d49b29dba5f22a78859cc0d9e07c17b1",
+  "hash": "601b6840feb6a792ec1144daa369e64892166febea5089cbb92859594a1c9672",
+  "must_change": false,
+  "created": "2026-10-19 09:19",
+  "last_login": "2026-10-19 09:21"
+ },
+ {
+  "username": "pacha",
+  "name": "MRS PACHA",
+  "role": "teacher",
+  "staffId": "sf_rd2lzj9",
+  "salt": "5509b5ba4ed7e6ca505f39b7d9c336e8",
+  "hash": "ab8b32b41836d72f685826c44c5258d261e2807d6009a47d6e2fb9f8743fcb38",
+  "must_change": false,
+  "created": "2026-10-19 09:22",
+  "last_login": "2026-10-19 09:24"
+ },
+ {
+  "username": "joy",
+  "name": "MISS JOYCE JUMA",
+  "role": "teacher",
+  "staffId": "sf_jssiry5",
+  "salt": "6a58f883fc75f60352e51b408abe84af",
+  "hash": "15ecd5388f4c54cc20f72355b29c1fd0ba8941e9ad12ea2e2f581933e02b4aef",
+  "must_change": false,
+  "created": "2026-10-19 09:43",
+  "last_login": "2026-10-19 09:47"
+ },
+ {
+  "username": "busolo",
+  "name": "JENIPHER     BUSOLO",
+  "role": "teacher",
+  "staffId": "sf_ni3q0gc",
+  "salt": "4641bb18bf2ddf630fe2fea26f9747aa",
+  "hash": "6bdb3f78265fd88a9172472d523214806b62d811a28c03d2ec1d6d05d1e42096",
+  "must_change": true,
+  "created": "2026-10-19 09:49"
+ },
+ {
+  "username": "kaloe",
+  "name": "MS LYDIA NABURUCK",
+  "role": "teacher",
+  "staffId": "sf_5q4tiqj",
+  "salt": "689b6aabcac8b8166c846e8c5b477464",
+  "hash": "44a09b8c70d9053a07795adea5ac16ce04c5eecc72868ecc58c14b4457720a18",
+  "must_change": false,
+  "created": "2026-10-19 10:33",
+  "last_login": "2026-10-19 10:36",
+  "phone": "+254710290447"
+ },
+ {
+  "username": "powon",
+  "name": "MS OLIVE POWON",
+  "role": "teacher",
+  "staffId": "sf_w0oakin",
+  "salt": "72e7f33a03f442807b9f9d829f90a062",
+  "hash": "8d0105fef7c03ee63b0614952c80186892e8133f31c3dee22f76846ac759e438",
+  "must_change": false,
+  "created": "2026-10-19 10:39",
+  "last_login": "2026-10-19 11:30"
+ },
+ {
+  "username": "jkarong",
+  "name": "JULIUS KARONG",
+  "role": "bursar",
+  "salt": "0b2727a02bd3b29fcda427d68a44f03d",
+  "hash": "c94acde62f54f9af630c1b6a13b743ee8baa86d73e184e969ef8c5b0a61b178e",
+  "must_change": true,
+  "created": "2026-10-19 10:47"
+ },
+ {
+  "username": "flokuron",
+  "name": "FAITH MASGHAMONI LOKURON",
+  "role": "teacher",
+  "staffId": "sf_ar6y3hz",
+  "salt": "637dcfa34b89e5b85c7341b9fc71c86a",
+  "hash": "fcd17fae76a06dcf849e76a355ed7e9a4d4cc31fbc7e346d465a49cd1e32e100",
+  "must_change": false,
+  "created": "2026-10-19 10:55",
+  "last_login": "2026-10-19 10:58"
+ },
+ {
+  "username": "extreme_vibe",
+  "name": "ERICK KOIPA",
+  "role": "teacher",
+  "staffId": "sf_ssmcgea",
+  "salt": "d36a1b14fbe583b6f620b1dcde68a603",
+  "hash": "993cec7e9b497b0ad0e15a0e231a2763a00795726080f3a7b19964a59355567d",
+  "must_change": false,
+  "created": "2026-10-19 11:00",
+  "last_login": "2026-10-21 09:51",
+  "phone": "+254710265448"
+ },
+ {
+  "username": "gladylags",
+  "name": "MD GLADYS CHEPKIRUI",
+  "role": "teacher",
+  "staffId": "sf_4ql4umv",
+  "salt": "1aac37ce2b0ad8c4367b64eb5f920fa4",
+  "hash": "cddb86162d303efe6d6441accce2cf4fb8e4c758bb8f131a96da48c5b8ee5685",
+  "must_change": false,
+  "created": "2026-10-19 11:02",
+  "last_login": "2026-10-19 11:08"
+ },
+ {
+  "username": "mrs-musto",
+  "name": "JUNE OYAMO",
+  "role": "teacher",
+  "staffId": "sf_zt3pfau",
+  "salt": "5eda03b513bbe34b9968826cc4f367f9",
+  "hash": "0d49f17c1383c8031dc81d673cd12b33d2ab239438592f4cce9f5001315ad8f3",
+  "must_change": false,
+  "created": "2026-10-19 11:17",
+  "last_login": "2026-10-19 11:19"
+ },
+ {
+  "username": "flo",
+  "name": "Mrs Flomena Ronoh",
+  "role": "teacher",
+  "staffId": "sf_7opvyr1",
+  "salt": "f16afd1a00d3adc23b189a9f31429125",
+  "hash": "b1b16ef5f913883f968e4c83b6e5e9da0dea35796948b22d772f390df40481a5",
+  "must_change": false,
+  "created": "2026-10-19 11:25",
+  "last_login": "2026-10-19 11:26"
+ },
+ {
+  "username": "weks",
+  "name": "MR MARTIN WEKESA KHAKUBO",
+  "role": "teacher",
+  "staffId": "sf_rw17w55",
+  "salt": "69e606994fcf1bdd00cbaae4be60ffc2",
+  "hash": "14cc8bdd7df1fe3458b6f418cf8dbbefdfdaa439b357cb861f55a5826470827e",
+  "must_change": false,
+  "created": "2026-10-19 11:34",
+  "last_login": "2026-10-19 11:37"
+ },
+ {
+  "username": "chamer",
+  "name": "MD CHAMER NAOMY",
+  "role": "senior",
+  "staffId": "sf_eeorlrq",
+  "salt": "43dc85ae25fa483c3593688939dfe820",
+  "hash": "dabe657650a686999019fc73528b9a7c73c57578191835b4b98f76142374834e",
+  "must_change": false,
+  "created": "2026-10-19 11:43",
+  "last_login": "2026-10-19 11:45"
+ },
+ {
+  "username": "marcoz",
+  "name": "MR MARKO KIPLAGAT MARU",
+  "role": "teacher",
+  "staffId": "sf_1qj20y5",
+  "salt": "5c29a736d28328d1b1f48624290bf164",
+  "hash": "714471f9f0e3c6d47740722cb61260def1c1ab936df94fb289fb2812ce626ac6",
+  "must_change": false,
+  "created": "2026-10-21 08:39",
+  "last_login": "2026-10-21 09:58"
+ },
+ {
+  "username": "mooh",
+  "name": "MD MAUREEN LAGAT",
+  "role": "teacher",
+  "staffId": "sf_r4z02u4",
+  "salt": "82e193958b77a4797117565644125b3c",
+  "hash": "b8a3c75e05c324b593b317fd1986f5feb0ae83f99fdf563924478550b2b3a371",
+  "must_change": true,
+  "created": "2026-10-21 08:48",
+  "last_login": "2026-10-21 08:50"
+ }
+]

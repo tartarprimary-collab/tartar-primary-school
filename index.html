@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tartar School | Toil for Excellence</title><link rel="icon" href="/crest.png">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<style>
+:root{--y:#D9B44A;--k:#1F3A2E;--g:#2F6B4A;--b:#2C5A7A;--t:#A9CBD3;--bg:#FBF9F3;--soft:#F1EBDA;--tx:#26332C;--cd:#fff;--bd:#E4DCC4}
+@media (prefers-color-scheme:dark){:root{--bg:#14201A;--soft:#1B2B23;--tx:#EDE8D6;--cd:#1F3128;--bd:#34493D}}
+*{box-sizing:border-box;font-family:Poppins,sans-serif}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--tx);line-height:1.5}
+a{color:inherit;text-decoration:none}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--b);outline-offset:2px}
+.top{background:var(--k);color:var(--y);display:flex;gap:22px;align-items:center;padding:12px 28px;flex-wrap:wrap;font-weight:600;font-size:14px}
+.top a:hover{text-decoration:underline}.sp{flex:1}
+.top input{border:0;border-radius:20px;padding:7px 14px;width:180px;font-size:14px}
+.pl{background:var(--y);color:var(--k);border:0;border-radius:20px;padding:8px 18px;font-weight:700;cursor:pointer}
+header{display:flex;align-items:center;gap:24px;padding:14px 28px;flex-wrap:wrap;border-bottom:4px solid var(--y)}
+.brand{display:flex;align-items:center;gap:14px}.brand img{width:80px;height:80px;border-radius:6px}
+.brand b{font-size:24px;display:block;line-height:1.1}.brand small{color:var(--g);font-weight:700;font-style:italic}
+nav{margin-left:auto;display:flex;gap:24px;flex-wrap:wrap;font-weight:600;font-size:14px;text-transform:uppercase}
+nav a{padding:6px 0;border-bottom:3px solid transparent}nav a:hover{border-color:var(--g)}
+.hero{display:grid;grid-template-columns:1.2fr 1fr;background:var(--soft);min-height:420px;position:relative}
+.hl{background:var(--k);border-radius:0 8px 8px 0;margin:60px 0 80px;padding:28px 36px;color:var(--y)}
+.hl h2{margin:0;font-size:clamp(48px,9vw,104px);line-height:1;letter-spacing:2px}
+.hl p{margin:6px 0 0;font-size:clamp(24px,4vw,44px);font-weight:700;letter-spacing:8px;color:var(--t)}
+.hr{display:grid;place-items:center;padding:24px;background:linear-gradient(135deg,var(--y) 55%,var(--g) 55%)}
+.hr img{width:min(320px,80%);border:6px solid var(--k);border-radius:8px}
+.cta{position:absolute;left:36px;bottom:18px;display:flex;gap:16px;align-items:center}
+.cta button{border:3px solid var(--b);color:var(--b);padding:8px 26px;font-weight:700;letter-spacing:3px;background:var(--bg);cursor:pointer}
+section{padding:36px 28px;max-width:1200px;margin:auto}
+h3.sh{font-size:28px;margin:0 0 20px}h3.sh a{font-size:15px;color:var(--b);font-weight:500;margin-left:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.ncard{background:var(--cd);border:1px solid var(--bd);border-radius:8px;overflow:hidden;display:block;transition:transform .2s ease,box-shadow .2s ease}
+.ncard:hover,.ncard:focus-visible{transform:translateY(-4px);box-shadow:0 10px 24px rgba(31,58,46,.16)}
+.ncard .news-image{display:block;width:100%;height:160px;object-fit:cover;transition:transform .35s ease}
+.ncard:hover .news-image,.ncard:focus-visible .news-image{transform:scale(1.04)}
+.ncard .news-copy{padding:14px}.ncard h4{margin:0 0 6px;font-size:16px}.ncard p{margin:0;font-size:14px;opacity:.8}
+@media(prefers-reduced-motion:reduce){.ncard,.ncard .news-image{transition:none}.ncard:hover,.ncard:focus-visible{transform:none}}
+.stats{background:var(--k);color:var(--y);padding:30px 28px}.stats .grid{max-width:1200px;margin:auto;text-align:center}.stats b{font-size:40px;display:block}
+.mot{text-align:center;font-size:clamp(22px,4vw,34px);font-weight:600;padding:42px 20px;background:var(--soft);color:var(--k);letter-spacing:3px;border-top:1px solid var(--bd)}
+footer{background:var(--k);color:#ddd;padding:28px;display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between}footer b{color:var(--y)}
+#portal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;justify-content:center;align-items:flex-start;padding:20px;overflow:auto;z-index:50}
+#portal.open{display:flex}
+#portal .lcard{margin:auto;position:relative;color:#1F3A2E}
+#portal .x{position:absolute;top:8px;right:12px;background:none;border:0;font-size:28px;cursor:pointer;color:#555}
+@media(max-width:800px){.hero{grid-template-columns:1fr}.hl{margin:30px 0}.cta{position:static;padding:16px 20px}nav{margin-left:0;gap:14px}}
+
+#portal .lcard{background:#fff;width:430px;max-width:100%;padding:35px 40px 30px;border-radius:15px;border-top:8px solid #D9B44A;box-shadow:0 15px 40px rgba(0,0,0,.45);text-align:center;animation:fade .2s;}
+#portal .logo{width:150px;height:150px;object-fit:cover;border-radius:14px;margin-bottom:12px}
+#portal h1{font-size:25px;color:#1F3A2E}
+#portal h3{margin-top:4px;font-size:16px;color:#555;font-weight:600}
+#portal .motto{margin-top:8px;color:#2F6B4A;font-weight:700;letter-spacing:1px;text-transform:uppercase;font-size:14px}
+#portal .ig{text-align:left;margin-top:18px}
+#portal .ig label{display:block;margin-bottom:7px;font-weight:600}
+#portal .ig input[type=text],#portal .ig input[type=password]{width:100%;padding:13px;border-radius:8px;border:1px solid #bbb;font-size:15px;text-transform:none}
+#portal .ig input.up{text-transform:uppercase;letter-spacing:2px}
+#portal .ig input:focus{outline:none;border-color:#2F6B4A;box-shadow:0 0 0 3px rgba(47,107,74,.2)}
+#portal .btn{margin-top:22px;width:100%;padding:14px;background:#D9B44A;border:2px solid #1F3A2E;border-radius:8px;font-size:17px;font-weight:bold;color:#1F3A2E;cursor:pointer;transition:.3s}
+#portal .btn:hover{background:#1F3A2E;color:#D9B44A}
+#portal .btn.sm{width:auto;padding:8px 14px;font-size:14px;margin:0}
+#portal .msg{margin-top:14px;font-size:14px;min-height:18px;color:#A33A2F}
+#portal .msg.ok{color:#2F6B4A}
+#portal .hint{margin-top:16px;font-size:13px;color:#555}
+#portal .footer{margin-top:16px;font-size:13px;color:#777}
+#portal .footer a{color:#2F6B4A;font-weight:600;text-decoration:none;cursor:pointer}
+#portal .hidden{display:none}
+#portal table{width:100%;border-collapse:collapse;margin-top:14px;font-size:13px;text-align:left}
+#portal th,#portal td{padding:7px 4px;border-bottom:1px solid #eee}
+#portal .tbl{max-height:200px;overflow:auto}
+#portal .row{display:flex;gap:10px;align-items:center;margin-top:10px;font-size:14px}
+#portal .code{font-family:monospace;font-size:22px;letter-spacing:3px;background:#F6F1E4;border:2px dashed #1F3A2E;padding:10px;border-radius:8px;margin-top:14px}
+#portal .link{background:none;border:none;color:#A33A2F;cursor:pointer;font-size:13px}
+#applicationModal{position:fixed;inset:0;display:none;justify-content:center;align-items:flex-start;padding:20px;overflow:auto;background:rgba(0,0,0,.75);z-index:60}
+#applicationModal.open{display:flex}
+#applicationModal .application-card{position:relative;margin:auto;background:#fff;color:#1F3A2E;width:560px;max-width:100%;padding:30px;border-radius:15px;border-top:8px solid #D9B44A;box-shadow:0 15px 40px rgba(0,0,0,.45)}
+#applicationModal h2{margin:0 32px 8px 0}
+#applicationModal .application-intro{color:#555;margin-bottom:12px}
+#applicationModal label{display:block;text-align:left;margin-top:12px;font-weight:600}
+#applicationModal input,#applicationModal select{display:block;width:100%;margin-top:5px;padding:11px;border:1px solid #bbb;border-radius:8px;font-size:15px}
+#applicationModal .application-close{position:absolute;top:10px;right:14px;border:0;background:none;font-size:28px;cursor:pointer;color:#555}
+#applicationModal .application-message{min-height:22px;margin-top:12px}
+#applicationModal .application-message.ok{color:#2F6B4A}
+#applicationModal .application-message.error{color:#A33A2F}
+#applicationModal .application-honeypot{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
+@media(max-width:500px){#portal .lcard{padding:25px 20px}#portal .logo{width:120px;height:120px}}
+@keyframes fade{from{opacity:0;transform:translateY(-30px)}to{opacity:1;transform:translateY(0)}}
+</style></head><body>
+<div class="top"><a href="#programmes">Sections &amp; Departments</a><a href="#programmes">Clubs &amp; Societies</a><a href="#about">Virtual Tour</a><a href="#admissions" data-admission>Apply for Admission</a><a href="#about">Data Privacy</a><span class="sp"></span><input type="search" placeholder="Search…" aria-label="Search"><button class="pl" data-login>Portal Login</button></div>
+<header><a class="brand" href="#"><img src="/crest.png" alt="Tartar School crest"><span><b>TARTAR SCHOOL</b><small>Toil for Excellence</small></span></a>
+<nav><a href="#about">About Us</a><a href="#programmes">Programmes</a><a href="/student.html">Students Info</a><a href="#about">Parents</a><a href="#programmes">Academics</a><a href="#news">Media Desk</a></nav></header>
+<div class="hero" id="admissions"><div class="hl"><h2>ADMISSIONS</h2><p>APPLY TODAY!</p></div><div class="hr"><img src="/crest.png" alt="Tartar School crest"></div>
+<div class="cta"><button type="button" data-admission>CLICK HERE</button><span>Est. 1943</span></div></div>
+<section id="news"><h3 class="sh">NEWS | <a href="#">All News &amp; Announcements</a></h3><div class="grid">
+<a class="ncard" href="#"><img class="news-image" src="/school/assets/img/news/term-opening.svg" alt="Illustration of a school, a calendar and a sunrise" loading="lazy" decoding="async"><div class="news-copy"><h4>Term opening dates announced</h4><p>Term opens on 5 January 2027.</p></div></a>
+<a class="ncard" href="#"><img class="news-image" src="/school/assets/img/news/science-fair.svg" alt="Illustration of a student presenting a science experiment" loading="lazy" decoding="async"><div class="news-copy"><h4>Science fair showcase</h4><p>Students present their projects.</p></div></a>
+<a class="ncard" href="#"><img class="news-image" src="/school/assets/img/news/tree-planting.svg" alt="Illustration of a student planting a young tree" loading="lazy" decoding="async"><div class="news-copy"><h4>Tree planting day</h4><p>Learners and staff grow the grounds.</p></div></a>
+<a class="ncard" href="#admissions" data-admission><img class="news-image" src="/school/assets/img/news/admissions.svg" alt="Illustration of an open school gate and application form" loading="lazy" decoding="async"><div class="news-copy"><h4>Admissions now open</h4><p>Applications open for the new intake.</p></div></a>
+<a class="ncard" href="https://www.knec.ac.ke/wp-content/uploads/2026/02/2026-KJSEA-TIMETABLE.pdf" target="_blank" rel="noopener"><img class="news-image" src="/school/assets/img/news/kjsea.svg" alt="Illustration of an examination paper, pencil and clock" loading="lazy" decoding="async"><div class="news-copy"><h4>2026 KJSEA countdown</h4><p>Grade 9 assessment is scheduled to begin on 26 October. <strong id="kjseaCountdown" aria-live="polite">Calculating countdown…</strong></p><span>View official KNEC timetable (PDF)</span></div></a>
+<a class="ncard" href="https://www.knec.ac.ke/wp-content/uploads/2026/02/2026-KPSEA-TIMETABLE.pdf" target="_blank" rel="noopener"><img class="news-image" src="/school/assets/img/news/kpsea.svg" alt="Illustration of a learner's books, pencil and graduation cap" loading="lazy" decoding="async"><div class="news-copy"><h4>2026 KPSEA countdown</h4><p>Grade 6 assessment is scheduled to begin on 26 October. <strong id="kpseaCountdown" aria-live="polite">Calculating countdown…</strong></p><span>View official KNEC timetable (PDF)</span></div></a>
+</div></section>
+<script>
+(function () {
+  var targets = [
+    { id: "kjseaCountdown", date: "2026-10-26" },
+    { id: "kpseaCountdown", date: "2026-10-26" },
+  ];
+  function nairobiDate() {
+    var parts = new Intl.DateTimeFormat("en-US", {
+      timeZone: "Africa/Nairobi", year: "numeric", month: "2-digit", day: "2-digit",
+    }).formatToParts(new Date());
+    var values = {};
+    parts.forEach(function (part) { values[part.type] = part.value; });
+    return values.year + "-" + values.month + "-" + values.day;
+  }
+  function updateCountdowns() {
+    var today = nairobiDate();
+    var todayParts = today.split("-").map(Number);
+    var todayUtc = Date.UTC(todayParts[0], todayParts[1] - 1, todayParts[2]);
+    targets.forEach(function (target) {
+      var dateParts = target.date.split("-").map(Number);
+      var targetUtc = Date.UTC(dateParts[0], dateParts[1] - 1, dateParts[2]);
+      var days = Math.round((targetUtc - todayUtc) / 86400000);
+      var message = days > 1 ? days + " days to go." : days === 1 ? "1 day to go." :
+        days === 0 ? "Assessment begins today." : "Assessment period has started.";
+      var element = document.getElementById(target.id);
+      if (element) element.textContent = message;
+    });
+  }
+  updateCountdowns();
+  window.setInterval(updateCountdowns, 60000);
+})();
+</script>
+<div class="stats"><div class="grid"><div><b>1943</b>Year established</div><div><b>4</b>Core pillars</div><div><b>100%</b>Commitment to learning</div><div><b>1</b>School family</div></div></div>
+<section id="programmes"><h3 class="sh">PROGRAMMES</h3><div class="grid">
+<div class="ncard"><div><h4>📖 Literacy &amp; Languages</h4><p>Reading, writing and communication.</p></div></div>
+<div class="ncard"><div><h4>🔬 Science &amp; Technology</h4><p>Hands-on laboratory learning.</p></div></div>
+<div class="ncard"><div><h4>🎓 Academic Excellence</h4><p>Focused exam preparation.</p></div></div>
+<div class="ncard"><div><h4>🌳 Character &amp; Environment</h4><p>Values, service and care for our surroundings.</p></div></div></div></section>
+<section id="about"><h3 class="sh">ABOUT US</h3><p style="max-width:70ch">Tartar School was established in 1943 with one belief: lasting success is earned through hard work.</p></section>
+<div class="mot">TOIL FOR EXCELLENCE</div>
+<footer><div><b>Tartar School</b><br>P.O. Box 169-30600, Kapenguria<br><a href="mailto:tartarprimary@gmail.com">tartarprimary@gmail.com</a><br><a href="mailto:tartarprimary26@gmail.com">tartarprimary26@gmail.com</a></div><div><b>Portal</b><br><a href="#login" data-login>Student, staff &amp; admin login</a></div><div>&copy; 2026 Tartar School</div></footer>
+<div id="applicationModal" role="dialog" aria-modal="true" aria-labelledby="applicationTitle" aria-describedby="applicationIntro">
+  <form class="application-card" id="applicationForm">
+    <button class="application-close" type="button" id="closeApplication" aria-label="Close admission application">&times;</button>
+    <h2 id="applicationTitle">Apply for Admission</h2>
+    <p class="application-intro" id="applicationIntro">Complete this form and the school will contact you about the application.</p>
+    <label for="appLearner">Learner's full name
+      <input id="appLearner" name="learner_name" maxlength="120" autocomplete="name" required>
+    </label>
+    <label for="appDob">Learner's date of birth
+      <input id="appDob" name="date_of_birth" type="date" required>
+    </label>
+    <label for="appGrade">Class or grade sought
+      <select id="appGrade" name="grade" required>
+        <option value="">Choose class or grade</option>
+        <option>Early Years</option><option>PP1</option><option>PP2</option>
+        <option>Grade 1</option><option>Grade 2</option><option>Grade 3</option>
+        <option>Grade 4</option><option>Grade 5</option><option>Grade 6</option>
+        <option>Grade 7</option><option>Grade 8</option><option>Grade 9</option>
+      </select>
+    </label>
+    <label for="appGuardian">Parent or guardian's full name
+      <input id="appGuardian" name="guardian_name" maxlength="120" autocomplete="name" required>
+    </label>
+    <label for="appPhone">Parent or guardian's phone number
+      <input id="appPhone" name="guardian_phone" type="tel" maxlength="24" autocomplete="tel" required>
+    </label>
+    <label class="application-honeypot" aria-hidden="true">Website
+      <input name="website" tabindex="-1" autocomplete="off">
+    </label>
+    <p class="application-intro">Your details will be stored by the school for admissions follow-up and can be reviewed by the school administrator.</p>
+    <label style="display:flex;gap:8px;align-items:flex-start;font-weight:400" for="appConsent">
+      <input id="appConsent" name="consent" type="checkbox" value="yes" required style="width:auto;margin-top:5px">
+      I am the parent/guardian or authorized to submit this application, and I agree that the school may use these details to respond to it.
+    </label>
+    <button class="btn" id="submitApplication" type="submit">Submit application</button>
+    <p class="application-message" id="applicationMessage" aria-live="polite"></p>
+  </form>
+</div>
+<div id="portal" role="dialog" aria-modal="true" aria-label="Portal login"><div class="lcard"><button class="x" id="closeP" aria-label="Close">&times;</button>
+  <img src="/crest.png" class="logo" alt="Tartar School crest">
+  <h1>Tartar School</h1>
+  <h3 id="subtitle">Student &amp; Staff Portal</h3>
+  <p class="motto">Toil for Excellence</p>
+
+  <!-- LOGIN -->
+  <form id="loginView">
+    <div class="ig"><label for="school">School Code (Username)</label>
+      <input class="up" type="text" id="school" placeholder="Enter school code" inputmode="numeric" autocomplete="off" required></div>
+    <div class="ig"><label for="access">Access Code</label>
+      <input class="up" type="password" id="access" placeholder="Code given by the admin" autocomplete="off" required></div>
+    <button class="btn" type="submit">Login</button>
+    <p class="msg" id="loginMsg"></p>
+    <p class="hint">No code? Please ask the school admin to generate one for you.</p>
+    <p class="footer">&copy; 2026 Tartar School &middot; Estd. 1943 &middot; Learners: <a href="/student.html?level=pre">Pre-Primary</a> &middot; <a href="/student.html?level=primary">Primary</a> &middot; <a href="/student.html?level=junior">Junior School</a> &middot; <a id="toStaff">Staff</a> &middot; <a id="toAdmin">Admin</a></p>
+  </form>
+
+  <!-- WELCOME -->
+  <div id="welcomeView" class="hidden">
+    <h2 style="margin-top:20px;color:#2F6B4A">Welcome!</h2>
+    <p style="margin-top:8px">Logged in with school code <b id="who"></b></p>
+    <button class="btn" id="logout">Log out</button>
+  </div>
+
+  <!-- STAFF LOGIN -->
+  <form id="staffLoginView" class="hidden">
+    <div class="ig"><label for="suser">Username</label>
+      <input type="text" id="suser" autocomplete="username" required></div>
+    <div class="ig"><label for="spass">Password</label>
+      <input type="password" id="spass" autocomplete="current-password" required></div>
+    <button class="btn" type="submit">Staff Login</button>
+    <p class="msg" id="staffMsg"></p>
+    <p class="hint">Teachers, bursar and principal. SMS verification is temporarily paused.</p>
+    <p class="footer"><a class="back">&larr; Back to login</a></p>
+  </form>
+
+  <form id="otpView" class="hidden">
+    <p class="hint" id="otpHint">Enter the verification code sent to your account phone.</p>
+    <div class="ig"><label for="otpCode">Six-digit verification code</label>
+      <input type="text" id="otpCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required></div>
+    <button class="btn" type="submit">Verify and continue</button>
+    <p class="msg" id="otpMsg"></p>
+    <p class="footer"><a class="back">&larr; Back to login</a></p>
+  </form>
+
+  <form id="staffPwView" class="hidden">
+    <p class="hint">Please choose your own password to continue (at least 8 characters).</p>
+    <div class="ig"><label for="pwOld">Temporary password</label><input type="password" id="pwOld" required></div>
+    <div class="ig"><label for="pwNew">New password</label><input type="password" id="pwNew" minlength="8" required></div>
+    <div class="ig"><label for="pwNew2">Confirm new password</label><input type="password" id="pwNew2" minlength="8" required></div>
+    <button class="btn" type="submit">Save password</button>
+    <p class="msg" id="pwMsg"></p>
+  </form>
+
+  <!-- ADMIN LOGIN -->
+  <form id="adminLoginView" class="hidden">
+    <div class="ig"><label for="adminPass">Admin Password</label>
+      <input type="password" id="adminPass" placeholder="Enter admin password" required></div>
+    <button class="btn" type="submit">Enter Admin Panel</button>
+    <p class="hint" id="adminSignInHint">Admin sign-in uses your password.</p>
+    <p class="hint" style="text-align:center">or</p>
+    <div id="gbtn" style="display:flex;justify-content:center;margin-top:10px"></div>
+    <p class="msg" id="adminMsg"></p>
+    <p class="footer"><a class="back">&larr; Back to login</a></p>
+  </form>
+
+  <!-- ADMIN PANEL -->
+  <div id="adminView" class="hidden">
+    <a class="btn" href="/school/" style="display:block;text-decoration:none;margin:20px 0 6px">Open School System</a>
+    <a class="btn" href="/manage.html" style="display:block;text-decoration:none;margin:10px 0 6px;background:#fff">Learner portal records &amp; resources</a>
+    <p class="hint" style="text-align:center">or manage access codes below</p>
+    <div class="ig"><label for="label">Issued to (optional)</label>
+      <input type="text" id="label" placeholder="e.g. student or staff name" autocomplete="off"></div>
+    <div class="row"><label><input type="checkbox" id="once" checked> One-time use</label></div>
+    <button class="btn" id="gen">Generate Access Code</button>
+    <div class="code hidden" id="newCode"></div>
+    <p class="msg" id="genMsg"></p>
+    <div class="tbl"><table><thead><tr><th>Issued to</th><th>Access Code</th><th>Status</th><th></th></tr></thead><tbody id="list"></tbody></table></div>
+    <p class="footer"><a class="back">&larr; Log out of admin</a></p>
+  </div>
+</div></div>
+<script>
+const $ = id => document.getElementById(id);
+const views = ["loginView","welcomeView","adminLoginView","adminView","staffLoginView","otpView","staffPwView"];
+let currentView = "loginView";
+history.replaceState({ portalView: currentView }, "", location.href);
+function show(v, historyMode) {
+  views.forEach(x => $(x).classList.toggle("hidden", x !== v));
+  currentView = v;
+  if (historyMode === "replace") history.replaceState({ portalView: v }, "", location.href);
+  else if (historyMode !== "none") history.pushState({ portalView: v }, "", location.href);
+}
+let token = null;
+let pendingOtp = null;
+window.addEventListener("popstate", e => {
+  let next = e.state && e.state.portalView;
+  if (!views.includes(next)) next = "loginView";
+  if (currentView === "adminView" && next !== "adminView") {
+    token = null;
+    pendingOtp = null;
+    sessionStorage.removeItem("tt");
+    next = "adminLoginView";
+  }
+  if (next === "adminView" && !sessionStorage.getItem("tt")) next = "adminLoginView";
+  if (next === "otpView" && !pendingOtp) next = currentView === "staffPwView" ? "staffLoginView" : "adminLoginView";
+  if (next === "staffPwView" && !sessionStorage.getItem("tt")) next = "staffLoginView";
+  show(next, "replace");
+});
+window.addEventListener("pageshow", () => {
+  if (currentView === "adminView" && (!token || sessionStorage.getItem("tt") !== token)) {
+    token = null;
+    pendingOtp = null;
+    show("adminLoginView", "replace");
+  }
+});
+
+async function api(path, body){
+  const opt = { method: body ? "POST" : "GET", headers: { "Content-Type": "application/json" } };
+  if (token) opt.headers.Authorization = "Bearer " + token;
+  if (body) opt.body = JSON.stringify(body);
+  try {
+    const r = await fetch(path, opt);
+    const d = await r.json().catch(() => ({}));
+    if (r.status === 401 && path.startsWith("/api/admin/") && token) { token = null; show("adminLoginView"); }
+    return { ok: r.ok, ...d };
+  } catch { return { ok: false, error: "Cannot reach the server. Is server.py running?" }; }
+}
+
+/* ---- User login ---- */
+$("loginView").addEventListener("submit", async e => {
+  e.preventDefault();
+  const school = $("school").value, code = $("access").value, msg = $("loginMsg");
+  msg.textContent = "Checking...";
+  const r = await api("/api/login", { school, code });
+  if (!r.ok) { msg.textContent = r.error || "Login failed."; return; }
+  $("who").textContent = school.trim(); $("access").value = ""; msg.textContent = "";
+  show("welcomeView");
+});
+$("logout").onclick = () => { $("school").value = ""; show("loginView"); };
+
+/* ---- Staff login ---- */
+$("toStaff").onclick = () => show("staffLoginView");
+$("staffLoginView").addEventListener("submit", async e => {
+  e.preventDefault();
+  $("staffMsg").textContent = "Checking credentials...";
+  const r = await api("/api/staff/login", { username: $("suser").value, password: $("spass").value });
+  if (!r.ok) { $("staffMsg").textContent = r.error || "Login failed."; return; }
+  if (r.requires_otp) beginOtp(r, "staff", $("spass").value);
+  else finishStaffLogin(r, $("spass").value);
+});
+function beginOtp(r, kind, password) {
+  pendingOtp = { kind, challengeId: r.challenge_id, password: password || "" };
+  $("otpHint").textContent = "A verification code was sent to your " + r.sent_to + ".";
+  $("otpCode").value = "";
+  $("otpMsg").textContent = "";
+  $("spass").value = "";
+  show("otpView");
+  $("otpCode").focus();
+}
+function finishStaffLogin(r, password) {
+  token = r.token; sessionStorage.setItem("tt", token);
+  $("spass").value = "";
+  if (r.must_change) { $("pwOld").value = password; show("staffPwView"); }
+  else { location.href = "/school/"; }
+}
+$("otpView").addEventListener("submit", async e => {
+  e.preventDefault();
+  if (!pendingOtp) { $("otpMsg").textContent = "Sign in again to request a new code."; return; }
+  $("otpMsg").textContent = "Verifying...";
+  const attempt = pendingOtp;
+  const endpoint = attempt.kind === "staff" ? "/api/staff/verify-otp" : "/api/admin/verify-otp";
+  const r = await api(endpoint, { challenge_id: attempt.challengeId, code: $("otpCode").value.trim() });
+  if (!r.ok) { $("otpMsg").textContent = r.error || "Could not verify the code."; return; }
+  pendingOtp = null;
+  if (attempt.kind === "staff") finishStaffLogin(r, attempt.password);
+  else await enterAdmin(r);
+});
+$("staffPwView").addEventListener("submit", async e => {
+  e.preventDefault();
+  if ($("pwNew").value !== $("pwNew2").value) { $("pwMsg").textContent = "The new passwords do not match."; return; }
+  const r = await api("/api/staff/password", { old: $("pwOld").value, new: $("pwNew").value });
+  if (!r.ok) { $("pwMsg").textContent = r.error || "Could not change password."; return; }
+  location.href = "/school/";
+});
+
+/* ---- Admin login ---- */
+$("toAdmin").onclick = () => { show("adminLoginView"); setupGoogleSignIn(); };
+document.querySelectorAll(".back").forEach(b => b.onclick = () => {
+  token = null; pendingOtp = null; sessionStorage.removeItem("tt"); $("adminPass").value = ""; $("spass").value = "";
+  $("adminMsg").textContent = ""; $("otpCode").value = ""; $("otpMsg").textContent = ""; show("loginView", "replace");
+});
+async function enterAdmin(r){
+  if (!r.ok) { $("adminMsg").textContent = r.error || "Login failed."; return; }
+  if (r.requires_otp) { $("adminPass").value = ""; beginOtp(r, "admin", ""); return; }
+  token = r.token; sessionStorage.setItem("tt", token); $("adminPass").value = ""; $("adminMsg").textContent = "";
+  await render(); show("adminView");
+}
+$("adminLoginView").addEventListener("submit", async e => {
+  e.preventDefault();
+  enterAdmin(await api("/api/admin/login", { password: $("adminPass").value }));
+});
+async function onGoogle(res){ enterAdmin(await api("/api/admin/google", { credential: res.credential })); }
+
+let googleSignInSetupStarted = false;
+async function setupGoogleSignIn() {
+  if (googleSignInSetupStarted) return;
+  googleSignInSetupStarted = true;
+  const cfg = await api("/api/config");
+  if (!cfg.google_client_id) { $("gbtn").textContent = "Google sign-in not set up yet."; return; }
+  $("adminSignInHint").textContent = "Sign in with your admin password or authorized Google account.";
+  if (!window.google) {
+    await new Promise(resolve => {
+      const script = document.createElement("script");
+      script.src = "https://accounts.google.com/gsi/client";
+      script.async = true;
+      script.onload = resolve;
+      script.onerror = resolve;
+      document.head.appendChild(script);
+    });
+  }
+  if (!window.google) {
+    $("adminSignInHint").textContent = "Google sign-in needs internet. Use your admin password for now.";
+    $("gbtn").textContent = "Google sign-in needs internet.";
+    return;
+  }
+  google.accounts.id.initialize({ client_id: cfg.google_client_id, callback: onGoogle });
+  google.accounts.id.renderButton($("gbtn"), { theme: "outline", size: "large" });
+}
+
+/* ---- Admin panel ---- */
+$("gen").onclick = async () => {
+  const msg = $("genMsg"); msg.classList.remove("ok");
+  const r = await api("/api/admin/generate", { label: $("label").value, once: $("once").checked });
+  if (!r.ok) { msg.textContent = r.error || "Could not generate."; return; }
+  $("newCode").textContent = r.code; $("newCode").classList.remove("hidden");
+  msg.classList.add("ok"); msg.textContent = "Code generated. Give it to the user.";
+  $("label").value = ""; render();
+};
+async function render(){
+  const r = await api("/api/admin/codes"), list = $("list");
+  list.innerHTML = "";
+  const codes = (r.codes || []).slice().reverse();
+  if (!codes.length) { list.innerHTML = "<tr><td colspan='4'>No codes yet.</td></tr>"; return; }
+  codes.forEach(c => {
+    const tr = document.createElement("tr");
+    const cells = [c.label || "-", c.code, c.once ? (c.used ? "Used" : "Unused") : "Active"];
+    cells.forEach((t, i) => { const td = document.createElement("td"); td.textContent = t; if (i === 1) td.style.fontFamily = "monospace"; tr.appendChild(td); });
+    const td = document.createElement("td"), b = document.createElement("button");
+    b.className = "link"; b.textContent = "Revoke";
+    b.onclick = async () => { await api("/api/admin/revoke", { code: c.code }); render(); };
+    td.appendChild(b); tr.appendChild(td); list.appendChild(tr);
+  });
+}
+
+const P=$("portal");const openP=()=>{P.classList.add("open");document.body.style.overflow="hidden"};
+const closeP=()=>{P.classList.remove("open");document.body.style.overflow=""};
+document.querySelectorAll("[data-login]").forEach(b=>b.addEventListener("click",e=>{e.preventDefault();openP()}));
+$("closeP").onclick=closeP;P.addEventListener("click",e=>{if(e.target===P)closeP()});
+const applicationModal=$("applicationModal"),applicationForm=$("applicationForm");
+function openApplication(){applicationModal.classList.add("open");document.body.style.overflow="hidden";$("appLearner").focus()}
+function closeApplication(){applicationModal.classList.remove("open");document.body.style.overflow=""}
+document.querySelectorAll("[data-admission]").forEach(b=>b.addEventListener("click",e=>{e.preventDefault();openApplication()}));
+$("closeApplication").onclick=closeApplication;
+applicationModal.addEventListener("click",e=>{if(e.target===applicationModal)closeApplication()});
+applicationForm.addEventListener("submit",async e=>{
+  e.preventDefault();
+  const button=$("submitApplication"),message=$("applicationMessage");
+  button.disabled=true;message.className="application-message";message.textContent="Submitting application…";
+  const payload=Object.fromEntries(new FormData(applicationForm).entries());
+  try{
+    const response=await fetch("/api/admissions",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+    const result=await response.json().catch(()=>({}));
+    if(!response.ok)throw new Error(result.error||"The application could not be submitted.");
+    applicationForm.reset();message.classList.add("ok");message.textContent="Thank you. Your application has been received; the school will contact you.";
+  }catch(error){message.classList.add("error");message.textContent=error.message||"Could not reach the school server. Please try again."}
+  finally{button.disabled=false}
+});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeP();closeApplication()}});
+if(location.hash==="#login")openP();
+</script></body></html>

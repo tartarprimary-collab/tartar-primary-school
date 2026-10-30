@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Timetable — Tartar School</title>
+<link rel="icon" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+<div id="shell" class="shell">
+  <div class="shell-content">
+    <main id="main" class="main">
+
+      <div class="page-header">
+        <div>
+          <div class="eyebrow">Weekly schedule</div>
+          <h1>Timetable</h1>
+          <p class="desc" id="pageDesc">Lesson allocations by class, learning area and teacher.</p>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn btn-outline" id="btnPrintView">Print selected timetable</button>
+          <button type="button" class="btn btn-outline" id="btnPrintAllClasses" hidden>Print all classes</button>
+          <button type="button" class="btn btn-primary" id="btnAddLesson" hidden>Allocate lesson</button>
+        </div>
+      </div>
+
+      <div class="controls-row">
+        <div class="select-wrap"><select id="viewMode" aria-label="Timetable view"></select></div>
+        <div class="select-wrap"><select id="entityFilter" aria-label="Filter timetable"></select></div>
+        <span class="badge badge-outline" id="lessonCount" style="height:34px;display:inline-flex;align-items:center;"></span>
+      </div>
+
+      <div class="card card-pad mt-4" style="overflow-x:auto;">
+        <div id="weekGrid"></div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<div id="toast-root" class="toast-root"></div>
+<div id="overlay-root"></div>
+
+<script src="../assets/js/data.js"></script>
+<script src="../assets/js/shell.js"></script>
+<script>Shell.init('timetable');</script>
+<script src="../assets/js/timetable.js"></script>
+</body>
+</html>

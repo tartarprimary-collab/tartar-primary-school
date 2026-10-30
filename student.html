@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tartar School | Learner Portal</title>
+<link rel="icon" href="/crest.png">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,Segoe UI,sans-serif}
+body{background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)),url("https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1600&q=80") center/cover fixed #14210f;min-height:100vh;font-size:14px}
+.hidden{display:none!important}
+.wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{background:#fff;border-radius:14px;padding:22px;box-shadow:0 12px 36px rgba(0,0,0,.4);border-top:8px solid #FFD700}
+.login{width:420px;max-width:100%;text-align:center}
+.login img{width:130px;height:130px;border-radius:12px;object-fit:cover}
+h1{font-size:23px}h3{color:#555;font-size:15px;margin:3px 0 6px}
+.motto{color:#1b8a2e;font-weight:700;text-transform:uppercase;letter-spacing:1px;font-size:13px}
+.ig{text-align:left;margin-top:16px}.ig label{display:block;font-weight:600;margin-bottom:6px}
+input,select{width:100%;padding:12px;border:1px solid #bbb;border-radius:8px;font-size:15px}
+input:focus,select:focus{outline:none;border-color:#1b8a2e;box-shadow:0 0 0 3px rgba(27,138,46,.2)}
+.btn{margin-top:20px;width:100%;padding:13px;background:#FFD700;border:2px solid #111;border-radius:8px;font-size:16px;font-weight:700;cursor:pointer}
+.btn:hover{background:#111;color:#FFD700}
+.btn.s{width:auto;margin:0;padding:8px 14px;font-size:14px}
+.msg{margin-top:12px;color:#c00;min-height:18px}
+.foot{margin-top:14px;font-size:13px}.foot a{color:#1b8a2e;font-weight:600;text-decoration:none}
+header{background:#FFD700;border-bottom:3px solid #111;padding:10px 18px;display:flex;align-items:center;gap:12px}
+header img{width:42px;height:42px;border-radius:8px}header div{flex:1}header small{display:block}
+main{max-width:860px;margin:18px auto;padding:0 14px}
+.card.m{margin-bottom:16px;border-top-width:5px}
+.f{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0}.f select{width:auto}
+table{width:100%;border-collapse:collapse}th{text-align:left;background:#fafae6;font-size:12px}th,td{padding:8px 6px;border-bottom:1px solid #eee}
+.tot{margin-top:12px;font-weight:700}.only-print{display:none}
+.club-intro{color:#555;margin:8px 0 12px}
+.club-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}
+.club-choice{display:flex;align-items:flex-start;gap:9px;padding:10px;border:1px solid #ddd;border-radius:8px;cursor:pointer}
+.club-choice input{width:auto;margin-top:4px}
+.club-choice:has(input:disabled:not(:checked)){opacity:.55;cursor:not-allowed}
+.club-status{display:inline-block;border-radius:16px;padding:3px 10px;background:#fff2bf;font-weight:700}
+.club-status.approved{background:#d8f0dc;color:#17652b}
+.club-status.declined{background:#fde0e0;color:#a22}
+.club-message{min-height:20px;margin-top:10px}
+@media print{header,.np{display:none!important}.only-print{display:block;text-align:center;margin-bottom:12px}body{background:#fff}.card{box-shadow:none;border:none}}
+</style>
+</head>
+<body>
+
+<div class="wrap" id="loginV">
+  <form class="card login" id="lf">
+    <img src="/crest.png" alt="Tartar School crest">
+    <h1>Tartar School</h1><h3 id="sub">Learner Portal</h3><p class="motto">Toil for Excellence</p>
+    <div class="ig"><label for="nm">Your name (username)</label>
+      <input id="nm" placeholder="First, middle and surname" autocomplete="off" required></div>
+    <div class="ig"><label for="pw">Admission number (password)</label>
+      <input id="pw" type="password" autocomplete="off" required></div>
+    <button class="btn" type="submit">Login</button>
+    <p class="msg" id="lm"></p>
+    <p class="foot"><a href="/">&larr; Main login page</a></p>
+  </form>
+</div>
+
+<div id="portalV" class="hidden">
+  <header class="np"><img src="/crest.png" alt=""><div><b id="who"></b><small id="info"></small></div>
+    <button class="btn s" id="out">Log out</button></header>
+  <main>
+    <div class="card m" id="rc">
+      <div class="only-print"><h2>Tartar School: Report Card</h2><p>Toil for Excellence</p></div>
+      <h2>My results</h2>
+      <div class="f np"><label for="term"><b>Term:</b></label>
+        <select id="term"><option value="T1">Term 1</option><option value="T2">Term 2</option><option value="T3">Term 3</option></select>
+        <button class="btn s" id="dlr">Download / print report card (PDF)</button></div>
+      <p id="rhead" style="font-weight:600"></p>
+      <table><thead><tr><th>Subject</th><th>Score</th><th>Grade</th></tr></thead><tbody id="rrows"></tbody></table>
+      <p class="tot" id="rtot"></p>
+    </div>
+    <div class="card m np"><h2>Learning resources</h2>
+      <table><thead><tr><th>Title</th><th>Subject</th><th>File</th><th></th></tr></thead><tbody id="res"></tbody></table></div>
+    <div class="card m np" id="clubsCard">
+      <h2>Clubs &amp; Societies</h2>
+      <p class="club-intro">Choose up to two activities. Your choices will be sent to the school for approval. You can change and resubmit them later.</p>
+      <div class="club-options" id="clubOptions"></div>
+      <p class="club-intro" id="clubCurrent"></p>
+      <button class="btn s" id="saveClubs" type="button">Submit choices for approval</button>
+      <p class="club-message" id="clubMessage" aria-live="polite"></p>
+    </div>
+  </main>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const grade = m => m >= 80 ? "A" : m >= 70 ? "B" : m >= 60 ? "C" : m >= 50 ? "D" : "E";
+const TERMS = { T1: "Term 1", T2: "Term 2", T3: "Term 3" };
+const LV = { pre: "Pre-Primary", primary: "Primary", junior: "Junior School" };
+const entry = new URLSearchParams(location.search).get("level");
+if (LV[entry]) $("sub").textContent = "Learner Portal · " + LV[entry];
+const lvl = () => LV[ME.level] ? " · " + LV[ME.level] : "";
+let tok = null, ME = null;
+let currentView = "login";
+history.replaceState({ studentView: currentView }, "", location.href);
+
+function showStudentView(view, historyMode) {
+  $("loginV").classList.toggle("hidden", view !== "login");
+  $("portalV").classList.toggle("hidden", view !== "portal");
+  currentView = view;
+  if (historyMode === "replace") history.replaceState({ studentView: view }, "", location.href);
+  else if (historyMode !== "none") history.pushState({ studentView: view }, "", location.href);
+}
+
+window.addEventListener("popstate", e => {
+  let next = e.state && e.state.studentView;
+  if (next !== "login" && next !== "portal") next = "login";
+  if (currentView === "portal" && next !== "portal") tok = ME = null;
+  if (next === "portal" && !tok) next = "login";
+  showStudentView(next, "replace");
+});
+
+window.addEventListener("pageshow", async e => {
+  if (!e.persisted || currentView !== "portal" || !tok) return;
+  const current = await api("/api/student/me");
+  if (!current.ok) return;
+  ME = current;
+  $("who").textContent = ME.name;
+  $("info").textContent = "Class: " + ME.class + lvl() + " · Adm: " + ME.adm;
+  showResults();
+  showResources();
+  showClubs();
+});
+
+async function api(path, body) {
+  const o = { method: body ? "POST" : "GET", headers: { "Content-Type": "application/json" } };
+  if (tok) o.headers.Authorization = "Bearer " + tok;
+  if (body) o.body = JSON.stringify(body);
+  try {
+    const r = await fetch(path, o);
+    if (r.status === 401 && tok) { logout(); return {}; }
+    return { ok: r.ok, ...(await r.json().catch(() => ({}))) };
+  } catch { return { ok: false, error: "Cannot reach the server." }; }
+}
+function logout() { tok = ME = null; $("pw").value = ""; $("lm").textContent = ""; showStudentView("login", "replace"); }
+
+$("lf").addEventListener("submit", async e => {
+  e.preventDefault();
+  $("lm").textContent = "Checking...";
+  const r = await api("/api/student/login", { name: $("nm").value, password: $("pw").value });
+  if (!r.ok) { $("lm").textContent = r.error || "Login failed."; return; }
+  tok = r.token;
+  ME = await api("/api/student/me");
+  if (!ME.ok) { $("lm").textContent = ME.error || "Could not load your portal."; tok = null; return; }
+  $("who").textContent = ME.name; $("info").textContent = "Class: " + ME.class + lvl() + " · Adm: " + ME.adm;
+  showStudentView("portal");
+  $("lm").textContent = ""; $("pw").value = "";
+  showResults(); showResources(); showClubs();
+});
+$("out").onclick = logout;
+
+function showResults() {
+  const t = $("term").value, rows = ME.results.filter(x => x.term === t);
+  const total = rows.reduce((a, x) => a + (parseFloat(x.score) || 0), 0), mean = rows.length ? total / rows.length : 0;
+  $("rhead").textContent = ME.name + " · " + ME.class + " · " + TERMS[t];
+  $("rrows").innerHTML = rows.map(x => `<tr><td>${esc(x.subject)}</td><td>${parseFloat(x.score) || 0}</td><td>${grade(parseFloat(x.score) || 0)}</td></tr>`).join("") || "<tr><td colspan='3'>No results published for this term yet.</td></tr>";
+  $("rtot").textContent = rows.length ? `Total: ${total}   Mean: ${mean.toFixed(1)}   Overall grade: ${grade(mean)}` : "";
+}
+$("term").onchange = showResults;
+$("dlr").onclick = () => window.print();   // choose "Save as PDF" in the print window
+
+function showResources() {
+  $("res").innerHTML = ME.resources.map(x => `<tr><td>${esc(x.title)}</td><td>${esc(x.subject)}</td><td>${esc(x.filename)}</td>
+    <td><button class="btn s" data-id="${esc(x.id)}" data-fn="${esc(x.filename)}">Download</button></td></tr>`).join("") || "<tr><td colspan='4'>No resources yet.</td></tr>";
+}
+function showClubs() {
+  const selected = (ME.clubs && ME.clubs.activities) || [];
+  const options = ME.club_options || [];
+  $("clubOptions").innerHTML = options.map(activity => `<label class="club-choice">
+    <input type="checkbox" name="clubActivity" value="${esc(activity)}" ${selected.includes(activity) ? "checked" : ""}>
+    <span>${esc(activity)}</span>
+  </label>`).join("");
+  const status = ME.clubs && ME.clubs.status;
+  const className = status === "Approved" ? "approved" : status === "Declined" ? "declined" : "pending";
+  $("clubCurrent").innerHTML = status
+    ? `Current request: <b>${selected.map(esc).join(", ")}</b> · <span class="club-status ${className}">${esc(status)}</span>`
+    : "You have not submitted club choices yet.";
+  $("clubMessage").textContent = "";
+  updateClubChoices();
+}
+function updateClubChoices() {
+  const inputs = [...document.querySelectorAll('input[name="clubActivity"]')];
+  const count = inputs.filter(input => input.checked).length;
+  inputs.forEach(input => { input.disabled = !input.checked && count >= (ME.club_max_selections || 2); });
+}
+document.addEventListener("change", e => {
+  if (e.target.matches('input[name="clubActivity"]')) updateClubChoices();
+});
+$("saveClubs").addEventListener("click", async () => {
+  const activities = [...document.querySelectorAll('input[name="clubActivity"]:checked')].map(input => input.value);
+  const message = $("clubMessage"), button = $("saveClubs");
+  if (!activities.length || activities.length > (ME.club_max_selections || 2)) {
+    message.textContent = "Choose one or two activities before submitting.";
+    return;
+  }
+  button.disabled = true;
+  message.textContent = "Submitting choices…";
+  const result = await api("/api/student/clubs", { activities });
+  button.disabled = false;
+  if (!result.ok) {
+    message.textContent = result.error || "Your choices could not be submitted.";
+    return;
+  }
+  ME.clubs = { activities, status: result.status, submitted: "" };
+  showClubs();
+  $("clubMessage").textContent = "Your choices were submitted and are waiting for school approval.";
+});
+$("res").onclick = async e => {
+  const b = e.target.closest("button[data-id]");
+  if (!b) return;
+  const r = await fetch("/api/file/" + b.dataset.id, { headers: { Authorization: "Bearer " + tok } });
+  if (!r.ok) return alert("Could not download this file.");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(await r.blob()); a.download = b.dataset.fn; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 3000);
+};
+</script>
+</body>
+</html>

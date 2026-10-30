@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Attendance — Tartar School</title>
+<link rel="icon" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+<div id="shell" class="shell">
+  <div class="shell-content">
+    <main id="main" class="main">
+
+      <div class="page-header">
+        <div>
+          <div class="eyebrow">Daily register</div>
+          <h1>Attendance</h1>
+          <p class="desc" id="pageDesc">Mark the class the way a teacher actually would, from a phone.</p>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn btn-outline" id="btnAllPresent">All present</button>
+          <button type="button" class="btn btn-primary" id="btnSave">Save register</button>
+        </div>
+      </div>
+
+      <div class="controls-row">
+        <div class="select-wrap"><select id="aDate"></select></div>
+        <div class="select-wrap"><select id="aGrade"></select></div>
+        <div class="select-wrap"><select id="aGroup"></select></div>
+        <span class="badge badge-outline" id="aCount" style="height:34px;display:inline-flex;align-items:center;"></span>
+      </div>
+
+      <div class="stack" id="rollBody"></div>
+
+    </main>
+  </div>
+</div>
+
+<div id="toast-root" class="toast-root"></div>
+<div id="overlay-root"></div>
+
+<script src="../assets/js/data.js"></script>
+<script src="../assets/js/shell.js"></script>
+<script>Shell.init('attendance');</script>
+<script src="../assets/js/attendance.js"></script>
+</body>
+</html>

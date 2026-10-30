@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Staff — Tartar School</title>
+<link rel="icon" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+<div id="shell" class="shell">
+  <div class="shell-content">
+    <main id="main" class="main">
+
+      <div class="page-header">
+        <div>
+          <div class="eyebrow">Staffroom</div>
+          <h1>Staff</h1>
+          <p class="desc">Teaching and support staff at Tartar School.</p>
+        </div>
+        <div class="actions"><button type="button" class="btn btn-primary" id="btnAddStaff">Add staff</button></div>
+      </div>
+
+      <div class="two-col" id="staffGrid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr));"></div>
+
+    </main>
+  </div>
+</div>
+
+<div id="toast-root" class="toast-root"></div>
+<div id="overlay-root"></div>
+
+<script src="../assets/js/data.js"></script>
+<script src="../assets/js/shell.js"></script>
+<script>Shell.init('staff');</script>
+<script src="../assets/js/staff.js"></script>
+</body>
+</html>

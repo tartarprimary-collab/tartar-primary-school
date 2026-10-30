@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Classes — Tartar School</title>
+<link rel="icon" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+<div id="shell" class="shell">
+  <div class="shell-content">
+    <main id="main" class="main">
+
+      <div class="page-header">
+        <div>
+          <div class="eyebrow">Classes</div>
+          <h1>Classes</h1>
+          <p class="desc" id="pageDesc">Class teachers, streams and class lists.</p>
+        </div>
+        <div class="actions"><button type="button" class="btn btn-primary" id="btnAddClass" hidden>Create class</button></div>
+      </div>
+
+      <div class="card card-pad"><div class="table-wrap"><table><thead><tr><th>Class</th><th>Section</th><th>Class teacher</th><th>Learners</th><th></th></tr></thead><tbody id="classBody"></tbody></table></div></div>
+
+    </main>
+  </div>
+</div>
+
+<div id="toast-root" class="toast-root"></div>
+<div id="overlay-root"></div>
+
+<script src="../assets/js/data.js"></script>
+<script src="../assets/js/pdfkit-mini.js"></script>
+<script src="../assets/js/reports.js"></script>
+<script src="../assets/js/shell.js"></script>
+<script>Shell.init('classes');</script>
+<script src="../assets/js/classes.js"></script>
+</body>
+</html>
