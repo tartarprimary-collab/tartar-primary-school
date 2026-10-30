@@ -90,6 +90,36 @@ CLUB_MAX_SELECTIONS = 2
 CLUB_STATUSES = {"Pending", "Approved", "Declined"}
 
 
+def find_file(rel):
+    """Locate a bundled page/asset under BASE. Falls back to a case-insensitive match,
+    because Windows ignores letter case but Linux hosts such as Render do not."""
+    exact = os.path.join(BASE, rel)
+    if os.path.isfile(exact):
+        return exact
+    cur = BASE
+    for part in rel.split("/"):
+        try:
+            match = next((n for n in os.listdir(cur) if n.lower() == part.lower()), None)
+        except OSError:
+            return exact
+        if match is None:
+            return exact
+        cur = os.path.join(cur, match)
+    return cur
+
+def check_bundled_files():
+    """Log clearly at startup if the site's own files were not deployed."""
+    missing = [rel for rel, _ in FILES.values() if not os.path.isfile(find_file(rel))]
+    if not os.path.isdir(SCHOOL_DIR):
+        missing.append("school/ (folder)")
+    if missing:
+        logging.error("Missing site files next to server.py (%s): %s", BASE, ", ".join(sorted(set(missing))))
+        try:
+            logging.error("Files/folders found in %s: %s", BASE, ", ".join(sorted(os.listdir(BASE))))
+        except OSError:
+            pass
+        logging.error("Push the portal/ and school/ folders to the repo (same folder as server.py) and redeploy.")
+
 def load():
     try:
         with open(DB) as f:
@@ -592,7 +622,7 @@ class Handler(BaseHTTPRequestHandler):
         if path in FILES:
             name, ctype = FILES[path]
             try:
-                with open(os.path.join(BASE, name), "rb") as f:
+                with open(find_file(name), "rb") as f:
                     return self.reply(200, raw=f.read(), ctype=ctype)
             except OSError:
                 return self.reply(404, {"error": "File missing: " + name})
@@ -1439,6 +1469,7 @@ class HTTPSRedirectHandler(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
+    check_bundled_files()
     if len(ADMIN_PASSWORD) < 16 or not ADMIN_PASSWORD.strip():
         raise SystemExit("Set ADMIN_PASSWORD to a unique password of at least 16 characters before starting the server.")
     if BEHIND_PROXY:
