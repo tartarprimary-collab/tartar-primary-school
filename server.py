@@ -25,7 +25,6 @@ SESSIONS, FAILS = {}, {}
 OTP_LOCK = threading.Lock()
 OTP_CHALLENGES, OTP_LAST_SENT = {}, {}
 
-# Updated file mappings pointing directly to the root directory
 FILES = {
     "/": ("index.html", "text/html; charset=utf-8"),
     "/index.html": ("index.html", "text/html; charset=utf-8"),
@@ -317,9 +316,7 @@ def lesson_error(st, lesson, excluding_id=""):
     if day and day not in WEEKDAYS: return "Choose a weekday from Monday to Friday."
     return ""
 
-def student_op_ok(me, st, op):
-    return True
-
+def student_op_ok(me, st, op): return True
 def op_ok(me, st, op):
     role, p = me["role"], op["p"]
     if role in ("admin", "principal") or p[0] in ROLE_WRITE.get(role, ()): return True
@@ -400,10 +397,8 @@ class Handler(BaseHTTPRequestHandler):
         if not s: return None, None
         return s, db
 
-def do_GET(self):
+    def do_GET(self):
         path = urllib.parse.urlparse(self.path).path
-        
-        # Check standard defined files dictionary
         if path in FILES:
             name, ctype = FILES[path]
             try:
@@ -412,17 +407,15 @@ def do_GET(self):
             except OSError:
                 return self.reply(404, {"error": "File missing: " + name})
 
-        # Handle legacy /school/ paths by stripping prefix and mapping to root files
-        if path in ("/school", "/school/"):
+        if path in ("/school", "/school/", "/school/app/dashboard.html"):
             self.send_response(302)
             self.send_header("Location", "/dashboard.html")
             self.end_headers()
             return
 
         if path.startswith("/school/"):
-            path = path[7:] # strip /school prefix
+            path = path[7:]
 
-        # Serve any static html/js/css/png directly from the root BASE directory
         target = os.path.realpath(os.path.join(BASE, path.lstrip("/")))
         if (target.startswith(os.path.realpath(BASE) + os.sep) and 
             os.path.splitext(target)[1].lower() in STATIC_EXT and 
@@ -449,6 +442,7 @@ def do_GET(self):
             return self.reply(200, {"google_client_id": GOOGLE_CLIENT_ID})
 
         self.reply(404, {"error": "Not found"})
+
     def do_POST(self):
         path, ip = urllib.parse.urlparse(self.path).path, self.client_address[0]
         try:
